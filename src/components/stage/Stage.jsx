@@ -53,6 +53,12 @@ const Container = styled.div.attrs(props => ({
 
 const StageBackgroundImage = styled.img`
   transform: scale(${({ scale }) => scale}, ${({ scale }) => scale});
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 `;
 
 const Stage = () => {
@@ -397,7 +403,11 @@ const Stage = () => {
       <Container x={position.x} y={position.y} transition={transition}>
         <Player direction={direction} isMoving={isMoving} scale={scale * 1} />
       </Container>
-      <StageBackgroundImage src={stageBackgroundImage} scale={scale * 1.5} />
+      <StageBackgroundImage
+        src={stageBackgroundImage}
+        scale={scale * 1.5}
+        unselectable="on"
+      />
     </>
   );
 };

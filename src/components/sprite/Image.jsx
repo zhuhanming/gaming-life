@@ -4,6 +4,12 @@ import styled from 'styled-components';
 
 const SpriteImage = styled.img`
   transform: translate(-${({ left }) => left}px, -${({ top }) => top}px);
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 `;
 
 const Image = ({ image, size, step, direction }) => {
