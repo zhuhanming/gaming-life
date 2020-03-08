@@ -42,26 +42,26 @@ const checkIfValidPosition = (position, scale) => {
 };
 
 const isNextToSign = (position, scale) => {
-  const signMinX = -36 * scale;
-  const signMaxX = 36 * scale;
-  const signMinY = -48 * scale;
-  const signMaxY = 24 * scale;
+  const signMinX = -40 * scale;
+  const signMaxX = 40 * scale;
+  const signMinY = -52 * scale;
+  const signMaxY = 28 * scale;
   const { x, y } = position;
   return signMinX < x && x < signMaxX && signMinY < y && y < signMaxY;
 };
 
 const isNextToLeftDoor = (position, scale) => {
-  const leftDoorMinX = -132 * scale;
-  const leftDoorMaxX = -20 * scale;
-  const leftDoorMaxY = -104 * scale;
+  const leftDoorMinX = -136 * scale;
+  const leftDoorMaxX = -16 * scale;
+  const leftDoorMaxY = -100 * scale;
   const { x, y } = position;
   return leftDoorMinX < x && x < leftDoorMaxX && y < leftDoorMaxY;
 };
 
 const isNextToRightDoor = (position, scale) => {
-  const rightDoorMinX = 20 * scale;
-  const rightDoorMaxX = 132 * scale;
-  const rightDoorMaxY = -104 * scale;
+  const rightDoorMinX = 16 * scale;
+  const rightDoorMaxX = 136 * scale;
+  const rightDoorMaxY = -100 * scale;
   const { x, y } = position;
   return rightDoorMinX < x && x < rightDoorMaxX && y < rightDoorMaxY;
 };
