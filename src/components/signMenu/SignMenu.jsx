@@ -29,36 +29,23 @@ const Menu = styled.div`
 `;
 
 const Instructions = styled.div`
+  font-size: ${({ scaled }) => (scaled ? 1.2 : 1.6)}rem;
   margin-bottom: 2rem;
 `;
 
 const Instruction = styled.p`
   margin: 0.1rem;
-  font-size: 1.6rem;
 `;
 
-const SignMenu = ({ setIsSignMenuShown, currentLevel, select, menuToggle }) => {
-  const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
+const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
+  const isScaled = window.innerWidth < 313 * 1.5;
+  const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
 
   useEffect(() => {
     const keyDownHandler = e => {
       const event = e || window.event;
       switch (event.keyCode) {
-        case 38:
-          // UP
-          if (optionSelected > 0) {
-            setOptionSelected(optionSelected - 1);
-            menuToggle.play();
-          }
-          break;
-        case 40:
-          // DOWN
-          if (optionSelected < 0) {
-            setOptionSelected(optionSelected + 1);
-            menuToggle.play();
-          }
-          break;
         case 88:
           // X
           if (optionSelected === 0) {
@@ -76,12 +63,12 @@ const SignMenu = ({ setIsSignMenuShown, currentLevel, select, menuToggle }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [setIsSignMenuShown, optionSelected]);
+  }, [setIsSignMenuShown, optionSelected, select]);
 
   return (
     <Container height={side} width={side}>
       <Menu className="sign-menu">
-        <Instructions>
+        <Instructions scaled={isScaled}>
           <Instruction>Question #{currentLevel}.</Instruction>
           <Instruction>Choose one of the two doors above.</Instruction>
           <Instruction>Each door leads to a question of its own.</Instruction>

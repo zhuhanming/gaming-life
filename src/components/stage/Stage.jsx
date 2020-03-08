@@ -375,7 +375,6 @@ const Stage = () => {
           currentLevel={currentLevel}
           setIsSignMenuShown={value => setMenuState({ isSignMenuShown: value })}
           select={select}
-          menuToggle={menuToggle}
         />
       )}
       {menuState.isPauseMenuShown && (

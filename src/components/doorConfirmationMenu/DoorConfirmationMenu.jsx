@@ -84,7 +84,7 @@ const DoorConfirmationMenu = ({
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [confirmDoorSelection, optionSelected]);
+  }, [confirmDoorSelection, optionSelected, select, menuToggle]);
 
   return (
     <Container height={side} width={side}>

@@ -132,7 +132,11 @@ const QuestionMenu = ({
     question.correctAnswer,
     question.question,
     dismissQuestion,
-    isQuestionCorrect
+    isQuestionCorrect,
+    correct,
+    wrong,
+    select,
+    menuToggle
   ]);
 
   if (isQuestionCorrect !== null) {

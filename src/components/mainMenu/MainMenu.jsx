@@ -39,17 +39,18 @@ const Menu = styled.div`
 `;
 
 const Instructions = styled.div`
+  font-size: ${({ scaled }) => (scaled ? 1.2 : 1.6)}rem;
   margin-bottom: 2rem;
 `;
 
 const Instruction = styled.p`
   margin: 0.1rem;
-  font-size: 1.6rem;
 `;
 
 const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
   const dispatch = useDispatch();
-  const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
+  const isScaled = window.innerWidth < 313 * 1.5;
+  const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
 
   const gameState = useSelector(state => state.game.gameState);
@@ -99,7 +100,7 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
     <Container height={side} width={side}>
       <GameTitle>Gaming Life</GameTitle>
       <Menu className="main-menu">
-        <Instructions>
+        <Instructions scaled={isScaled}>
           <Instruction>Welcome to Gaming Life.</Instruction>
           <Instruction>Arrow keys to move.</Instruction>
           <Instruction>X to interact.</Instruction>

@@ -86,7 +86,7 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [setIsPauseMenuShown, optionSelected, backToMenu]);
+  }, [setIsPauseMenuShown, optionSelected, backToMenu, select, menuToggle]);
 
   return (
     <Container height={side} width={side}>
