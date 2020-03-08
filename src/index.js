@@ -9,6 +9,10 @@ import './index.scss';
 
 import store, { persistor } from './app/store';
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+// eslint-disable-next-line no-unused-vars
+const audioCtx = new AudioContext();
+
 const render = () => {
   ReactDOM.render(
     <Provider store={store}>
