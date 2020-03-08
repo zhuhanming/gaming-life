@@ -91,6 +91,7 @@ const QuestionMenu = ({
             question.question === "Oops! We're still designing questions!" &&
             question.correctAnswer === "I'll come back later!"
           ) {
+            select.play();
             dismissQuestion();
             break;
           }
@@ -172,7 +173,29 @@ const QuestionMenu = ({
             onMouseOver={() => setOptionSelected(id)}
             onFocus={() => setOptionSelected(id)}
             onClick={() => {
-              select.play();
+              if (
+                question.question ===
+                  "Oops! We're still designing questions!" &&
+                question.correctAnswer === "I'll come back later!"
+              ) {
+                select.play();
+                dismissQuestion();
+                return;
+              }
+              // eslint-disable-next-line no-case-declarations
+              const data = {
+                question: question.question,
+                optionSelected,
+                isCorrect:
+                  questionAnswers[optionSelected] === question.correctAnswer
+              };
+              if (data.isCorrect) {
+                correct.play();
+              } else {
+                wrong.play();
+              }
+              handleQuestionSubmit(data);
+              setIsQuestionCorrect(data.isCorrect);
             }}
             className={`question-menu__button ${
               optionSelected === id ? 'active' : ''
