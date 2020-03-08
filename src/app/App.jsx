@@ -1,24 +1,27 @@
 import React from 'react';
+
+import Loading from 'components/loading';
+import retryPromise from 'utils/promiseUtils';
+
 import './App.scss';
 
-function App() {
+const loadStage = () => import('components/stage');
+const Stage = React.lazy(() => retryPromise(loadStage));
+
+const App = () => {
+  React.useEffect(() => {
+    loadStage();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Suspense fallback={<Loading />}>
+      <div className="App">
+        <header className="App-header">
+          <Stage />
+        </header>
+      </div>
+    </React.Suspense>
   );
-}
+};
 
 export default App;
