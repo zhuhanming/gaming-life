@@ -3,8 +3,4 @@
 .sign-menu {
   box-sizing: border-box;
   @include bitborder(6px, white);
-
-  &__button {
-    // margin: 1rem;
-  }
 }

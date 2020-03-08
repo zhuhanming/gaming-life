@@ -47,7 +47,7 @@ const Instruction = styled.p`
   font-size: 1.6rem;
 `;
 
-const SignMenu = ({ setIsSignMenuShown }) => {
+const SignMenu = ({ setIsSignMenuShown, currentLevel }) => {
   const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
 
@@ -92,10 +92,9 @@ const SignMenu = ({ setIsSignMenuShown }) => {
     <Container height={side} width={side}>
       <Menu className="sign-menu">
         <Instructions>
-          <Instruction>
-            Choose one of the two doors above. Each door leads to a question of
-            its own.
-          </Instruction>
+          <Instruction>Question #{currentLevel}.</Instruction>
+          <Instruction>Choose one of the two doors above.</Instruction>
+          <Instruction>Each door leads to a question of its own.</Instruction>
         </Instructions>
         <button
           type="button"
