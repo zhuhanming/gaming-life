@@ -17,8 +17,11 @@ button {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
+  background-color: initial;
+  border: initial;
+  text-decoration: underline;
+  padding-bottom: 0.5rem;
 
-  margin: 1rem;
   font-size: inherit;
 
   &.active {
