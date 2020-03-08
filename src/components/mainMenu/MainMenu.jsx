@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import UIFx from 'uifx';
 
 import selectMp3 from 'assets/sounds/select.mp3';
 import menuMp3 from 'assets/sounds/menu-toggle.mp3';
+import { resetGameState } from 'reducers/gameDux';
 
 import './MainMenu.scss';
 
@@ -55,8 +57,12 @@ const Instruction = styled.p`
 `;
 
 const MainMenu = ({ setIsMainMenuShown }) => {
+  const dispatch = useDispatch();
   const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
+
+  const gameState = useSelector(state => state.game.gameState);
+  const canResume = Object.prototype.hasOwnProperty.call(gameState, 'level-1');
 
   useEffect(() => {
     const keyDownHandler = e => {
@@ -71,13 +77,17 @@ const MainMenu = ({ setIsMainMenuShown }) => {
           break;
         case 40:
           // DOWN
-          if (optionSelected < 0) {
+          if (optionSelected < (canResume ? 1 : 0)) {
             setOptionSelected(optionSelected + 1);
             menuToggle.play();
           }
           break;
         case 88:
           if (optionSelected === 0) {
+            dispatch(resetGameState());
+            setIsMainMenuShown(false);
+            select.play();
+          } else if (optionSelected === 1) {
             setIsMainMenuShown(false);
             select.play();
           }
@@ -109,6 +119,7 @@ const MainMenu = ({ setIsMainMenuShown }) => {
           onMouseOver={() => setOptionSelected(0)}
           onFocus={() => setOptionSelected(0)}
           onClick={() => {
+            dispatch(resetGameState());
             setIsMainMenuShown(false);
             select.play();
           }}
@@ -118,6 +129,22 @@ const MainMenu = ({ setIsMainMenuShown }) => {
         >
           New Game
         </button>
+        {canResume && (
+          <button
+            type="button"
+            onMouseOver={() => setOptionSelected(1)}
+            onFocus={() => setOptionSelected(1)}
+            onClick={() => {
+              setIsMainMenuShown(false);
+              select.play();
+            }}
+            className={`main-menu__button ${
+              optionSelected === 1 ? 'active' : ''
+            }`}
+          >
+            Resume Game
+          </button>
+        )}
       </Menu>
     </Container>
   );
