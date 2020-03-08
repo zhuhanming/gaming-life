@@ -15,13 +15,11 @@ const audioCtx = new AudioContext();
 
 const render = () => {
   ReactDOM.render(
-    <audioCtx>
-      <Provider store={store}>
-        <PersistGate persistor={persistor}>
-          <App />
-        </PersistGate>
-      </Provider>
-    </audioCtx>,
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>,
     document.getElementById('root')
   );
 };

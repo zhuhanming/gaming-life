@@ -13,6 +13,8 @@ const App = () => {
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     });
 
+    window.dispatchEvent(new Event('resize'));
+
     return () => {
       window.removeEventListener('resize', () => {
         // We execute the same script as before
@@ -20,7 +22,7 @@ const App = () => {
         document.documentElement.style.setProperty('--vh', `${vh}px`);
       });
     };
-  });
+  }, []);
   return (
     <React.Suspense fallback={<Loading />}>
       <div className="App">
