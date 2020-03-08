@@ -22,6 +22,8 @@ const Container = styled.div`
   align-items: center;
   background-color: slategray;
   box-sizing: border-box;
+  position: absolute;
+  z-index: 2;
 `;
 
 const GameTitle = styled.h1`
@@ -41,6 +43,10 @@ const Menu = styled.div`
   justify-content: center;
   background-color: darkslategray;
   color: white;
+`;
+
+const Instructions = styled.div`
+  margin-bottom: 2rem;
 `;
 
 const Instruction = styled.p`
@@ -92,12 +98,12 @@ const MainMenu = ({ setIsMainMenuShown }) => {
     <Container height={side} width={side}>
       <GameTitle>Gaming Life</GameTitle>
       <Menu className="main-menu">
-        <div>
+        <Instructions>
           <Instruction>Welcome to Gaming Life.</Instruction>
           <Instruction>Arrow keys to move.</Instruction>
           <Instruction>X to interact.</Instruction>
           <Instruction>P to pause.</Instruction>
-        </div>
+        </Instructions>
         <button
           type="button"
           onMouseOver={() => setOptionSelected(0)}
