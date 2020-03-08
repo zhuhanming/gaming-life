@@ -26,7 +26,7 @@ import { updateGameState } from 'reducers/gameDux';
 import './Stage.scss';
 
 const bump = new UIFx(bumpMp3, {
-  throttleMs: 50
+  preload: 'automatic'
 });
 
 const select = new UIFx(selectMp3, {
