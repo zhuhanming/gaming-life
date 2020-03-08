@@ -1,28 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import UIFx from 'uifx';
 
-import selectMp3 from 'assets/sounds/select.mp3';
-import menuMp3 from 'assets/sounds/menu-toggle.mp3';
-import correctMp3 from 'assets/sounds/correct.mp3';
-import wrongMp3 from 'assets/sounds/wrong.mp3';
 import { getQuestionAtId } from 'data/questions';
 
 import './QuestionMenu.scss';
-
-const select = new UIFx(selectMp3, {
-  volume: 0.5
-});
-
-const menuToggle = new UIFx(menuMp3);
-
-const correct = new UIFx(correctMp3, {
-  volume: 0.7
-});
-
-const wrong = new UIFx(wrongMp3, {
-  volume: 0.7
-});
 
 const Container = styled.div`
   height: ${({ height }) => height}px;
@@ -61,7 +42,11 @@ const Instruction = styled.p`
 const QuestionMenu = ({
   questionId,
   handleQuestionSubmit,
-  dismissQuestion
+  dismissQuestion,
+  select,
+  menuToggle,
+  correct,
+  wrong
 }) => {
   const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);

@@ -1,17 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import UIFx from 'uifx';
-
-import selectMp3 from 'assets/sounds/select.mp3';
-import menuMp3 from 'assets/sounds/menu-toggle.mp3';
 
 import './PauseMenu.scss';
-
-const select = new UIFx(selectMp3, {
-  volume: 0.5
-});
-
-const menuToggle = new UIFx(menuMp3);
 
 const Container = styled.div`
   height: ${({ height }) => height}px;
@@ -54,7 +44,7 @@ const Instruction = styled.p`
   font-size: 1.6rem;
 `;
 
-const PauseMenu = ({ setIsPauseMenuShown, backToMenu }) => {
+const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
   const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
 

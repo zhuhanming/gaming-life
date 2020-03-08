@@ -7,6 +7,9 @@ import Player from 'components/player';
 import * as stageBackgroundImage from 'assets/map/map1.png';
 import bumpMp3 from 'assets/sounds/bump.mp3';
 import selectMp3 from 'assets/sounds/select.mp3';
+import menuMp3 from 'assets/sounds/menu-toggle.mp3';
+import correctMp3 from 'assets/sounds/correct.mp3';
+import wrongMp3 from 'assets/sounds/wrong.mp3';
 import {
   checkIfValidPosition,
   isNextToSign,
@@ -28,6 +31,16 @@ const bump = new UIFx(bumpMp3, {
 
 const select = new UIFx(selectMp3, {
   volume: 0.5
+});
+
+const menuToggle = new UIFx(menuMp3);
+
+const correct = new UIFx(correctMp3, {
+  volume: 0.7
+});
+
+const wrong = new UIFx(wrongMp3, {
+  volume: 0.7
 });
 
 const Container = styled.div.attrs(props => ({
@@ -343,18 +356,26 @@ const Stage = () => {
           }
           handleQuestionSubmit={handleQuestionSubmit}
           dismissQuestion={dismissQuestion}
+          select={select}
+          menuToggle={menuToggle}
+          correct={correct}
+          wrong={wrong}
         />
       )}
       {doorState.isConfirmingDoor && (
         <DoorConfirmationMenu
           doorSelected={doorState.doorSelected}
           confirmDoorSelection={confirmDoorSelection}
+          select={select}
+          menuToggle={menuToggle}
         />
       )}
       {menuState.isSignMenuShown && (
         <SignMenu
           currentLevel={currentLevel}
           setIsSignMenuShown={value => setMenuState({ isSignMenuShown: value })}
+          select={select}
+          menuToggle={menuToggle}
         />
       )}
       {menuState.isPauseMenuShown && (
@@ -363,11 +384,15 @@ const Stage = () => {
             setMenuState({ isPauseMenuShown: value })
           }
           backToMenu={backToMenu}
+          select={select}
+          menuToggle={menuToggle}
         />
       )}
       {menuState.isMainMenuShown && (
         <MainMenu
           setIsMainMenuShown={value => setMenuState({ isMainMenuShown: value })}
+          select={select}
+          menuToggle={menuToggle}
         />
       )}
       <Container x={position.x} y={position.y} transition={transition}>
