@@ -13,6 +13,8 @@ import {
   isNextToRightDoor
 } from 'utils/positionUtils';
 import MainMenu from 'components/mainMenu';
+import PauseMenu from 'components/pauseMenu';
+import SignMenu from 'components/signMenu';
 
 import './Stage.scss';
 
@@ -41,6 +43,8 @@ const Stage = () => {
   const [isMoving, setIsMoving] = useState(false);
   const [scale, setScale] = useState(1);
   const [isMainMenuShown, setIsMainMenuShown] = useState(true);
+  const [isPauseMenuShown, setIsPauseMenuShown] = useState(false);
+  const [isSignMenuShown, setIsSignMenuShown] = useState(false);
   const [position, setPosition] = useReducer((s, a) => ({ ...s, ...a }), {
     x: 0,
     y:
@@ -51,7 +55,7 @@ const Stage = () => {
 
   useEffect(() => {
     const keyDownHandler = e => {
-      if (isMainMenuShown) {
+      if (isMainMenuShown || isPauseMenuShown || isSignMenuShown) {
         return;
       }
       const event = e || window.event;
@@ -94,12 +98,23 @@ const Stage = () => {
           break;
         case 88:
           if (isNextToSign(position, scale)) {
+            setIsSignMenuShown(true);
+            setIsMoving(false);
             select.play();
           }
           if (isNextToLeftDoor(position, scale)) {
             select.play();
+            setIsMoving(false);
           }
           if (isNextToRightDoor(position, scale)) {
+            select.play();
+            setIsMoving(false);
+          }
+          break;
+        case 80:
+          if (!isMainMenuShown && !isPauseMenuShown) {
+            setIsPauseMenuShown(true);
+            setIsMoving(false);
             select.play();
           }
           break;
@@ -109,7 +124,7 @@ const Stage = () => {
     };
 
     const keyUpHandler = e => {
-      if (isMainMenuShown) {
+      if (isMainMenuShown || isPauseMenuShown || isSignMenuShown) {
         return;
       }
       const event = e || window.event;
@@ -176,27 +191,27 @@ const Stage = () => {
       window.removeEventListener('keydown', keyDownHandler);
       window.removeEventListener('keyup', keyUpHandler);
     };
-  }, [isMoving, direction, position, scale, isMainMenuShown]);
+  }, [
+    isMoving,
+    direction,
+    position,
+    scale,
+    isMainMenuShown,
+    isPauseMenuShown,
+    isSignMenuShown
+  ]);
 
   return (
     <>
-      {isMainMenuShown ? (
-        <MainMenu setIsMainMenuShown={setIsMainMenuShown} />
-      ) : (
-        <>
-          <Container x={position.x} y={position.y}>
-            <Player
-              direction={direction}
-              isMoving={isMoving}
-              scale={scale * 1}
-            />
-          </Container>
-          <StageBackgroundImage
-            src={stageBackgroundImage}
-            scale={scale * 1.5}
-          />
-        </>
+      {isSignMenuShown && <SignMenu setIsSignMenuShown={setIsSignMenuShown} />}
+      {isPauseMenuShown && (
+        <PauseMenu setIsPauseMenuShown={setIsPauseMenuShown} />
       )}
+      {isMainMenuShown && <MainMenu setIsMainMenuShown={setIsMainMenuShown} />}
+      <Container x={position.x} y={position.y}>
+        <Player direction={direction} isMoving={isMoving} scale={scale * 1} />
+      </Container>
+      <StageBackgroundImage src={stageBackgroundImage} scale={scale * 1.5} />
     </>
   );
 };
