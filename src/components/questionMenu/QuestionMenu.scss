@@ -1,0 +1,6 @@
+@import '../../assets/scss/main.scss';
+
+.question-menu {
+  box-sizing: border-box;
+  @include bitborder(6px, white);
+}
