@@ -47,31 +47,31 @@ const DoorConfirmationMenu = ({
   const [optionSelected, setOptionSelected] = useState(0);
 
   useEffect(() => {
-    const keyDownHandler = e => {
+    const keyDownHandler = async e => {
       const event = e || window.event;
       switch (event.keyCode) {
         case 38:
           // UP
           if (optionSelected > 0) {
+            await menuToggle.play();
             setOptionSelected(optionSelected - 1);
-            menuToggle.play();
           }
           break;
         case 40:
           // DOWN
           if (optionSelected < 1) {
+            await menuToggle.play();
             setOptionSelected(optionSelected + 1);
-            menuToggle.play();
           }
           break;
         case 88:
           // X
           if (optionSelected === 0) {
+            await select.play();
             confirmDoorSelection(true);
-            select.play();
           } else if (optionSelected === 1) {
+            await select.play();
             confirmDoorSelection(false);
-            select.play();
           }
           break;
         default:
@@ -99,9 +99,9 @@ const DoorConfirmationMenu = ({
           type="button"
           onMouseOver={() => setOptionSelected(0)}
           onFocus={() => setOptionSelected(0)}
-          onClick={() => {
+          onClick={async () => {
+            await select.play();
             confirmDoorSelection(true);
-            select.play();
           }}
           className={`door-confirmation-menu__button ${
             optionSelected === 0 ? 'active' : ''
@@ -113,9 +113,9 @@ const DoorConfirmationMenu = ({
           type="button"
           onMouseOver={() => setOptionSelected(1)}
           onFocus={() => setOptionSelected(1)}
-          onClick={() => {
+          onClick={async () => {
+            await select.play();
             confirmDoorSelection(false);
-            select.play();
           }}
           className={`door-confirmation-menu__button ${
             optionSelected === 1 ? 'active' : ''
