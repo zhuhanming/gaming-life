@@ -60,6 +60,5 @@ module.exports = {
         paths: ['src']
       }
     }
-  },
-  parser: 'babel-eslint'
+  }
 };
