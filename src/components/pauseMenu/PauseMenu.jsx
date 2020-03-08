@@ -36,16 +36,17 @@ const Menu = styled.div`
 `;
 
 const Instructions = styled.div`
+  font-size: ${({ scaled }) => (scaled ? 1.2 : 1.6)}rem;
   margin-bottom: 2rem;
 `;
 
 const Instruction = styled.p`
   margin: 0.1rem;
-  font-size: 1.6rem;
 `;
 
 const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
-  const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
+  const isScaled = window.innerWidth < 313 * 1.5;
+  const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
 
   useEffect(() => {
@@ -92,7 +93,7 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
     <Container height={side} width={side}>
       <GameTitle>Paused</GameTitle>
       <Menu className="pause-menu">
-        <Instructions>
+        <Instructions scaled={isScaled}>
           <Instruction>Arrow keys to move.</Instruction>
           <Instruction>X to interact.</Instruction>
           <Instruction>P to pause.</Instruction>
