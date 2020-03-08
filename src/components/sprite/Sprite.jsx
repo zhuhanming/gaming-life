@@ -11,6 +11,12 @@ const Container = styled.div`
   overflow: hidden;
   transform: scale(${({ scale }) => `${scale}, ${scale}`});
   transform-origin: center center;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 `;
 
 const Sprite = ({

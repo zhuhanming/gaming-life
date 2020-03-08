@@ -49,6 +49,12 @@ const Container = styled.div.attrs(props => ({
   transition: ${({ transition }) => transition}s;
   position: absolute;
   z-index: 1;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 `;
 
 const StageBackgroundImage = styled.img`
