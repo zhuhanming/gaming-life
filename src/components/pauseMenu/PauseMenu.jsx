@@ -54,7 +54,7 @@ const Instruction = styled.p`
   font-size: 1.6rem;
 `;
 
-const PauseMenu = ({ setIsPauseMenuShown }) => {
+const PauseMenu = ({ setIsPauseMenuShown, backToMenu }) => {
   const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
 
@@ -81,6 +81,9 @@ const PauseMenu = ({ setIsPauseMenuShown }) => {
           if (optionSelected === 0) {
             setIsPauseMenuShown(false);
             select.play();
+          } else if (optionSelected === 1) {
+            backToMenu();
+            select.play();
           }
           break;
         default:
@@ -93,7 +96,7 @@ const PauseMenu = ({ setIsPauseMenuShown }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [setIsPauseMenuShown, optionSelected]);
+  }, [setIsPauseMenuShown, optionSelected, backToMenu]);
 
   return (
     <Container height={side} width={side}>
@@ -123,6 +126,10 @@ const PauseMenu = ({ setIsPauseMenuShown }) => {
           className={`pause-menu__button ${
             optionSelected === 1 ? 'active' : ''
           }`}
+          onClick={() => {
+            backToMenu();
+            select.play();
+          }}
         >
           Back to Main Menu
         </button>
