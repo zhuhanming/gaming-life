@@ -1,0 +1,17 @@
+@import './variables.scss';
+
+@font-face {
+  font-family: 'DPComic';
+  src: url('../fonts/dpcomic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Arcade Classic';
+  src: url('../fonts/arcadeclassic.ttf') format('truetype');
+}
+
+@mixin bitborder($width, $color) {
+  box-shadow: $width 0 $color, -$width 0 $color, 0 (-$width) $color,
+    0 $width $color;
+  margin: $width auto;
+}
