@@ -101,7 +101,11 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
       <GameTitle>Gaming Life</GameTitle>
       <Menu className="main-menu">
         <Instructions scaled={isScaled}>
-          <Instruction>Welcome to Gaming Life.</Instruction>
+          <Instruction>
+            {canResume
+              ? 'You have an ongoing game.'
+              : 'Welcome to Gaming Life.'}
+          </Instruction>
           <Instruction>Arrow keys to move.</Instruction>
           <Instruction>X to interact.</Instruction>
           <Instruction>P to pause.</Instruction>
