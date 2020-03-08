@@ -5,12 +5,6 @@ import Stage from 'components/stage';
 import './App.scss';
 
 const App = () => {
-  let audioCtx;
-  window.onload = () => {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    // eslint-disable-next-line no-unused-vars
-    audioCtx = new AudioContext();
-  };
   useEffect(() => {
     // We listen to the resize event
     window.addEventListener('resize', () => {
@@ -31,7 +25,7 @@ const App = () => {
     <React.Suspense fallback={<Loading />}>
       <div className="App">
         <header className="App-header">
-          <Stage audioCtx={audioCtx} />
+          <Stage />
         </header>
       </div>
     </React.Suspense>

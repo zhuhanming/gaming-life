@@ -9,13 +9,19 @@ import './index.scss';
 
 import store, { persistor } from './app/store';
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+// eslint-disable-next-line no-unused-vars
+const audioCtx = new AudioContext();
+
 const render = () => {
   ReactDOM.render(
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>,
+    <audioCtx>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </audioCtx>,
     document.getElementById('root')
   );
 };
