@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useReducer } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import UIFx from 'uifx';
 
@@ -15,6 +16,9 @@ import {
 import MainMenu from 'components/mainMenu';
 import PauseMenu from 'components/pauseMenu';
 import SignMenu from 'components/signMenu';
+import DoorConfirmationMenu from 'components/doorConfirmationMenu';
+import QuestionMenu from 'components/questionMenu';
+import { updateGameState } from 'reducers/gameDux';
 
 import './Stage.scss';
 
@@ -29,7 +33,7 @@ const select = new UIFx(selectMp3, {
 const Container = styled.div.attrs(props => ({
   style: { transform: `translate(${props.x}px, ${props.y}px)` }
 }))`
-  transition: 0.1s;
+  transition: ${({ transition }) => transition}s;
   position: absolute;
   z-index: 1;
 `;
@@ -39,12 +43,25 @@ const StageBackgroundImage = styled.img`
 `;
 
 const Stage = () => {
+  const game = useSelector(state => state.game);
+  const { currentRoom, currentLevel } = game;
+
+  const dispatch = useDispatch();
+
   const [direction, setDirection] = useState(4);
   const [isMoving, setIsMoving] = useState(false);
   const [scale, setScale] = useState(1);
-  const [isMainMenuShown, setIsMainMenuShown] = useState(true);
-  const [isPauseMenuShown, setIsPauseMenuShown] = useState(false);
-  const [isSignMenuShown, setIsSignMenuShown] = useState(false);
+  const [transition, setTransition] = useState(0.1);
+  const [menuState, setMenuState] = useReducer((s, a) => ({ ...s, ...a }), {
+    isMainMenuShown: true,
+    isPauseMenuShown: false,
+    isSignMenuShown: false
+  });
+  const [doorState, setDoorState] = useReducer((s, a) => ({ ...s, ...a }), {
+    doorSelected: null,
+    isConfirmingDoor: false,
+    showDoorQuestion: false
+  });
   const [position, setPosition] = useReducer((s, a) => ({ ...s, ...a }), {
     x: 0,
     y:
@@ -55,7 +72,13 @@ const Stage = () => {
 
   useEffect(() => {
     const keyDownHandler = e => {
-      if (isMainMenuShown || isPauseMenuShown || isSignMenuShown) {
+      if (
+        menuState.isMainMenuShown ||
+        menuState.isPauseMenuShown ||
+        menuState.isSignMenuShown ||
+        doorState.isConfirmingDoor ||
+        doorState.showDoorQuestion
+      ) {
         return;
       }
       const event = e || window.event;
@@ -98,22 +121,28 @@ const Stage = () => {
           break;
         case 88:
           if (isNextToSign(position, scale)) {
-            setIsSignMenuShown(true);
+            setMenuState({ isSignMenuShown: true });
             setIsMoving(false);
             select.play();
           }
           if (isNextToLeftDoor(position, scale)) {
+            setDoorState({ doorSelected: 'left', isConfirmingDoor: true });
             select.play();
             setIsMoving(false);
           }
           if (isNextToRightDoor(position, scale)) {
+            setDoorState({ doorSelected: 'right', isConfirmingDoor: true });
             select.play();
             setIsMoving(false);
           }
           break;
         case 80:
-          if (!isMainMenuShown && !isPauseMenuShown) {
-            setIsPauseMenuShown(true);
+          if (
+            !menuState.isMainMenuShown &&
+            !menuState.isPauseMenuShown &&
+            !menuState.isSignMenuShown
+          ) {
+            setMenuState({ isPauseMenuShown: true });
             setIsMoving(false);
             select.play();
           }
@@ -124,7 +153,13 @@ const Stage = () => {
     };
 
     const keyUpHandler = e => {
-      if (isMainMenuShown || isPauseMenuShown || isSignMenuShown) {
+      if (
+        menuState.isMainMenuShown ||
+        menuState.isPauseMenuShown ||
+        menuState.isSignMenuShown ||
+        doorState.isConfirmingDoor ||
+        doorState.showDoorQuestion
+      ) {
         return;
       }
       const event = e || window.event;
@@ -196,19 +231,146 @@ const Stage = () => {
     direction,
     position,
     scale,
-    isMainMenuShown,
-    isPauseMenuShown,
-    isSignMenuShown
+    menuState.isMainMenuShown,
+    menuState.isPauseMenuShown,
+    menuState.isSignMenuShown,
+    doorState.isConfirmingDoor,
+    doorState.showDoorQuestion
   ]);
+
+  const handleSinglePositionChange = async (dir, change) => {
+    let newPosition;
+    switch (dir) {
+      case 'x':
+        newPosition = { ...position, x: position.x + change };
+        break;
+      case 'y':
+        newPosition = { ...position, y: position.y + change };
+        break;
+      default:
+        newPosition = { ...position };
+    }
+    if (checkIfValidPosition(newPosition, scale)) {
+      await setPosition(newPosition);
+    }
+  };
+
+  const turnPlayerAway = () => {
+    if (direction === 4) {
+      // change from up to down
+      setDirection(1);
+      handleSinglePositionChange('y', 8 * scale);
+    } else if (direction === 2) {
+      setDirection(3);
+      handleSinglePositionChange('x', 8 * scale);
+    } else if (direction === 3) {
+      setDirection(2);
+      handleSinglePositionChange('x', -8 * scale);
+    }
+  };
+
+  const confirmDoorSelection = value => {
+    if (value) {
+      setDoorState({ showDoorQuestion: true, isConfirmingDoor: false });
+    } else {
+      setDoorState({ doorSelected: null, isConfirmingDoor: false });
+      turnPlayerAway();
+    }
+  };
+
+  const handleQuestionSubmit = data => {
+    setTransition(0);
+    setDirection(4);
+    setPosition({
+      x: 0,
+      y:
+        window.innerWidth < 313 * 1.5
+          ? (128 * window.innerWidth) / (313 * 1.5)
+          : 128
+    });
+    setDoorState({
+      doorSelected: null
+    });
+    dispatch(
+      updateGameState({
+        ...data,
+        option: doorState.doorSelected
+      })
+    );
+    setTransition(0.1);
+  };
+
+  const dismissQuestion = () => {
+    setDoorState({
+      isConfirmingDoor: false,
+      showDoorQuestion: false
+    });
+  };
+
+  const backToMenu = () => {
+    setTransition(0);
+    setDirection(4);
+    setPosition({
+      x: 0,
+      y:
+        window.innerWidth < 313 * 1.5
+          ? (128 * window.innerWidth) / (313 * 1.5)
+          : 128
+    });
+
+    setDoorState({
+      doorSelected: null,
+      isConfirmingDoor: false,
+      showDoorQuestion: false
+    });
+
+    setMenuState({
+      isMainMenuShown: true,
+      isPauseMenuShown: false,
+      isSignMenuShown: false
+    });
+    setTransition(0.1);
+  };
 
   return (
     <>
-      {isSignMenuShown && <SignMenu setIsSignMenuShown={setIsSignMenuShown} />}
-      {isPauseMenuShown && (
-        <PauseMenu setIsPauseMenuShown={setIsPauseMenuShown} />
+      {doorState.showDoorQuestion && (
+        <QuestionMenu
+          questionId={
+            doorState.doorSelected === null
+              ? 2
+              : currentRoom * 2 + (doorState.doorSelected === 'left' ? 0 : 1)
+          }
+          handleQuestionSubmit={handleQuestionSubmit}
+          dismissQuestion={dismissQuestion}
+        />
       )}
-      {isMainMenuShown && <MainMenu setIsMainMenuShown={setIsMainMenuShown} />}
-      <Container x={position.x} y={position.y}>
+      {doorState.isConfirmingDoor && (
+        <DoorConfirmationMenu
+          doorSelected={doorState.doorSelected}
+          confirmDoorSelection={confirmDoorSelection}
+        />
+      )}
+      {menuState.isSignMenuShown && (
+        <SignMenu
+          currentLevel={currentLevel}
+          setIsSignMenuShown={value => setMenuState({ isSignMenuShown: value })}
+        />
+      )}
+      {menuState.isPauseMenuShown && (
+        <PauseMenu
+          setIsPauseMenuShown={value =>
+            setMenuState({ isPauseMenuShown: value })
+          }
+          backToMenu={backToMenu}
+        />
+      )}
+      {menuState.isMainMenuShown && (
+        <MainMenu
+          setIsMainMenuShown={value => setMenuState({ isMainMenuShown: value })}
+        />
+      )}
+      <Container x={position.x} y={position.y} transition={transition}>
         <Player direction={direction} isMoving={isMoving} scale={scale * 1} />
       </Container>
       <StageBackgroundImage src={stageBackgroundImage} scale={scale * 1.5} />
