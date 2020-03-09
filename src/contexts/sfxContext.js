@@ -14,7 +14,6 @@ const SfxProvider = props => {
     setTimeout(() => {
       setBumpSounds([]);
     }, 300);
-    console.log(bumpSounds);
   };
 
   const makeSelectSound = () => {
