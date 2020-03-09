@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
+
 import App from 'app';
-
+import AppProviders from 'contexts';
 import * as serviceWorker from './serviceWorker';
-import './index.scss';
-
 import store, { persistor } from './app/store';
+
+import './index.scss';
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 // eslint-disable-next-line no-unused-vars
@@ -17,7 +18,9 @@ const render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <App />
+        <AppProviders>
+          <App />
+        </AppProviders>
       </PersistGate>
     </Provider>,
     document.getElementById('root')
