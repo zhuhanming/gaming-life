@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import './DoorConfirmationMenu.scss';
+import { useSfx } from 'contexts/sfxContext';
+
+import './PauseMenu.scss';
 
 const Container = styled.div`
   height: ${({ height }) => height}px;
@@ -10,14 +12,22 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: slategray;
   box-sizing: border-box;
   position: absolute;
   z-index: 2;
 `;
 
+const GameTitle = styled.h1`
+  line-height: 5rem;
+  font-size: 4rem;
+  font-family: 'DPComic';
+  font-weight: normal;
+  margin: 0;
+`;
+
 const Menu = styled.div`
-  height: auto;
+  height: calc(80% - 5rem);
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -25,53 +35,49 @@ const Menu = styled.div`
   justify-content: center;
   background-color: darkslategray;
   color: white;
-  padding: 1rem;
 `;
 
 const Instructions = styled.div`
+  font-size: ${({ scaled }) => (scaled ? 1.2 : 1.6)}rem;
   margin-bottom: 2rem;
 `;
 
 const Instruction = styled.p`
   margin: 0.1rem;
-  font-size: 1.6rem;
 `;
 
-const DoorConfirmationMenu = ({
-  confirmDoorSelection,
-  doorSelected,
-  select,
-  menuToggle
-}) => {
-  const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
+const PauseMenu = ({ setIsPauseMenuShown, backToMenu }) => {
+  const { makeSelectSound, makeMenuSound } = useSfx();
+  const isScaled = window.innerWidth < 313 * 1.5;
+  const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
 
   useEffect(() => {
-    const keyDownHandler = async e => {
+    const keyDownHandler = e => {
       const event = e || window.event;
       switch (event.keyCode) {
         case 38:
           // UP
           if (optionSelected > 0) {
-            await menuToggle.play();
             setOptionSelected(optionSelected - 1);
+            makeMenuSound();
           }
           break;
         case 40:
           // DOWN
           if (optionSelected < 1) {
-            await menuToggle.play();
             setOptionSelected(optionSelected + 1);
+            makeMenuSound();
           }
           break;
         case 88:
           // X
           if (optionSelected === 0) {
-            await select.play();
-            confirmDoorSelection(true);
+            setIsPauseMenuShown(false);
+            makeSelectSound();
           } else if (optionSelected === 1) {
-            await select.play();
-            confirmDoorSelection(false);
+            backToMenu();
+            makeSelectSound();
           }
           break;
         default:
@@ -84,48 +90,52 @@ const DoorConfirmationMenu = ({
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [confirmDoorSelection, optionSelected, select, menuToggle]);
+  }, [
+    setIsPauseMenuShown,
+    optionSelected,
+    backToMenu,
+    makeSelectSound,
+    makeMenuSound
+  ]);
 
   return (
     <Container height={side} width={side}>
-      <Menu className="door-confirmation-menu">
-        <Instructions>
-          <Instruction>
-            Are you sure you wish to choose the {doorSelected} door?
-          </Instruction>
-          <Instruction>There is no going back!</Instruction>
+      <GameTitle>Paused</GameTitle>
+      <Menu className="pause-menu">
+        <Instructions scaled={isScaled}>
+          <Instruction>Arrow keys to move.</Instruction>
+          <Instruction>X to interact.</Instruction>
+          <Instruction>P to pause.</Instruction>
         </Instructions>
         <button
           type="button"
           onMouseOver={() => setOptionSelected(0)}
           onFocus={() => setOptionSelected(0)}
-          onClick={async () => {
-            await select.play();
-            confirmDoorSelection(true);
+          onClick={() => {
+            setIsPauseMenuShown(false);
+            makeSelectSound();
           }}
-          className={`door-confirmation-menu__button ${
+          className={`pause-menu__button ${
             optionSelected === 0 ? 'active' : ''
           }`}
         >
-          Confirm
+          Resume Game
         </button>
         <button
           type="button"
-          onMouseOver={() => setOptionSelected(1)}
-          onFocus={() => setOptionSelected(1)}
-          onClick={async () => {
-            await select.play();
-            confirmDoorSelection(false);
-          }}
-          className={`door-confirmation-menu__button ${
+          className={`pause-menu__button ${
             optionSelected === 1 ? 'active' : ''
           }`}
+          onClick={() => {
+            backToMenu();
+            makeSelectSound();
+          }}
         >
-          Nevermind
+          Back to Main Menu
         </button>
       </Menu>
     </Container>
   );
 };
 
-export default DoorConfirmationMenu;
+export default PauseMenu;
