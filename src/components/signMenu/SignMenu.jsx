@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { useSfx } from 'contexts/sfxContext';
+
 import './SignMenu.scss';
 
 const Container = styled.div`
@@ -37,7 +39,8 @@ const Instruction = styled.p`
   margin: 0.1rem;
 `;
 
-const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
+const SignMenu = ({ setIsSignMenuShown, currentLevel }) => {
+  const { makeSelectSound } = useSfx();
   const isScaled = window.innerWidth < 313 * 1.5;
   const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
@@ -50,7 +53,7 @@ const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
           // X
           if (optionSelected === 0) {
             setIsSignMenuShown(false);
-            select.play();
+            makeSelectSound();
           }
           break;
         default:
@@ -63,7 +66,7 @@ const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [setIsSignMenuShown, optionSelected, select]);
+  }, [setIsSignMenuShown, optionSelected, makeSelectSound]);
 
   return (
     <Container height={side} width={side}>
@@ -79,7 +82,7 @@ const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
           onFocus={() => setOptionSelected(0)}
           onClick={() => {
             setIsSignMenuShown(false);
-            select.play();
+            makeSelectSound();
           }}
           className={`sign-menu__button ${
             optionSelected === 0 ? 'active' : ''

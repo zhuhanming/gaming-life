@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { useSfx } from 'contexts/sfxContext';
+
 import './PauseMenu.scss';
 
 const Container = styled.div`
@@ -44,7 +46,8 @@ const Instruction = styled.p`
   margin: 0.1rem;
 `;
 
-const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
+const PauseMenu = ({ setIsPauseMenuShown, backToMenu }) => {
+  const { makeSelectSound, makeMenuSound } = useSfx();
   const isScaled = window.innerWidth < 313 * 1.5;
   const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
@@ -57,24 +60,24 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
           // UP
           if (optionSelected > 0) {
             setOptionSelected(optionSelected - 1);
-            menuToggle.play();
+            makeMenuSound();
           }
           break;
         case 40:
           // DOWN
           if (optionSelected < 1) {
             setOptionSelected(optionSelected + 1);
-            menuToggle.play();
+            makeMenuSound();
           }
           break;
         case 88:
           // X
           if (optionSelected === 0) {
             setIsPauseMenuShown(false);
-            select.play();
+            makeSelectSound();
           } else if (optionSelected === 1) {
             backToMenu();
-            select.play();
+            makeSelectSound();
           }
           break;
         default:
@@ -87,7 +90,13 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [setIsPauseMenuShown, optionSelected, backToMenu, select, menuToggle]);
+  }, [
+    setIsPauseMenuShown,
+    optionSelected,
+    backToMenu,
+    makeSelectSound,
+    makeMenuSound
+  ]);
 
   return (
     <Container height={side} width={side}>
@@ -104,7 +113,7 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
           onFocus={() => setOptionSelected(0)}
           onClick={() => {
             setIsPauseMenuShown(false);
-            select.play();
+            makeSelectSound();
           }}
           className={`pause-menu__button ${
             optionSelected === 0 ? 'active' : ''
@@ -119,7 +128,7 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
           }`}
           onClick={() => {
             backToMenu();
-            select.play();
+            makeSelectSound();
           }}
         >
           Back to Main Menu
