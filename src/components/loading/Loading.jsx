@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { isMobile, isSafari } from 'react-device-detect';
 
 const LoadingContainer = styled.div`
   height: ${({ height }) => height}px;
@@ -45,7 +46,10 @@ const Loading = ({ isLoading, showLoading = true }) => {
       >
         <GameTitle>Gaming Life</GameTitle>
         <LoadingText>by Hanming Zhu</LoadingText>
-        <Warning>Sound effects will lag on Safari!</Warning>
+        {isMobile && <Warning>Sound effects may lag on your device!</Warning>}
+        {!isMobile && isSafari && (
+          <Warning>Sound effects may be buggy on Safari!</Warning>
+        )}
       </LoadingContainer>
     );
   }

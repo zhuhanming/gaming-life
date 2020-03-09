@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { isBrowser, isSafari } from 'react-device-detect';
 
 import Loading from 'components/loading';
+import SafariStage from 'safariComponents/safariStage';
 import Stage from 'components/stage';
 import Sounds from 'components/sounds/Sounds';
 
@@ -9,12 +11,13 @@ import './App.scss';
 const App = () => {
   const [showLoading, setShowLoading] = useState(true);
   useEffect(() => {
-    // We listen to the resize event
-    window.addEventListener('resize', () => {
+    const adjustVh = () => {
       // We execute the same script as before
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
-    });
+    };
+    // We listen to the resize event
+    window.addEventListener('resize', adjustVh);
 
     setTimeout(() => {
       setShowLoading(false);
@@ -23,22 +26,37 @@ const App = () => {
     window.dispatchEvent(new Event('resize'));
 
     return () => {
-      window.removeEventListener('resize', () => {
-        // We execute the same script as before
-        const vh = window.innerHeight * 0.01;
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-      });
+      window.removeEventListener('resize', adjustVh);
     };
   }, []);
+
+  if (isSafari) {
+    console.log('SAFARI!!');
+  } else {
+    console.log('NOT SAFARI!!!');
+  }
+
   return (
     <React.Suspense fallback={<Loading isLoading />}>
-      <Sounds />
-      <div className="App">
-        <header className="App-header">
-          {showLoading && <Loading isLoading={false} />}
-          <Stage />
-        </header>
-      </div>
+      {isBrowser && isSafari && (
+        <>
+          <Sounds />
+          <div className="App">
+            <header className="App-header">
+              {showLoading && <Loading isLoading={false} />}
+              <SafariStage />
+            </header>
+          </div>
+        </>
+      )}
+      {!(isBrowser && isSafari) && (
+        <div className="App">
+          <header className="App-header">
+            {showLoading && <Loading isLoading={false} />}
+            <Stage />
+          </header>
+        </div>
+      )}
     </React.Suspense>
   );
 };
