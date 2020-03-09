@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import Loading from 'components/loading';
 import Stage from 'components/stage';
+import Sounds from 'components/sounds/Sounds';
+
 import './App.scss';
 
 const App = () => {
@@ -30,6 +32,7 @@ const App = () => {
   }, []);
   return (
     <React.Suspense fallback={<Loading isLoading />}>
+      <Sounds />
       <div className="App">
         <header className="App-header">
           {showLoading && <Loading isLoading={false} />}

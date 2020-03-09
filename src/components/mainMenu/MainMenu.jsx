@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { resetGameState } from 'reducers/gameDux';
+import { useSfx } from 'contexts/sfxContext';
 
 import './MainMenu.scss';
 
@@ -47,7 +48,8 @@ const Instruction = styled.p`
   margin: 0.1rem;
 `;
 
-const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
+const MainMenu = ({ setIsMainMenuShown }) => {
+  const { makeSelectSound, makeMenuSound } = useSfx();
   const dispatch = useDispatch();
   const isScaled = window.innerWidth < 313 * 1.5;
   const side = isScaled ? window.innerWidth : 313 * 1.5;
@@ -64,24 +66,24 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
           // UP
           if (optionSelected > 0) {
             setOptionSelected(optionSelected - 1);
-            menuToggle.play();
+            makeMenuSound();
           }
           break;
         case 40:
           // DOWN
           if (optionSelected < (canResume ? 1 : 0)) {
             setOptionSelected(optionSelected + 1);
-            menuToggle.play();
+            makeMenuSound();
           }
           break;
         case 88:
           if (optionSelected === 0) {
             dispatch(resetGameState());
             setIsMainMenuShown(false);
-            select.play();
+            makeSelectSound();
           } else if (optionSelected === 1) {
             setIsMainMenuShown(false);
-            select.play();
+            makeSelectSound();
           }
           break;
         default:
@@ -94,7 +96,14 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  });
+  }, [
+    makeMenuSound,
+    makeSelectSound,
+    canResume,
+    dispatch,
+    optionSelected,
+    setIsMainMenuShown
+  ]);
 
   return (
     <Container height={side} width={side}>
@@ -117,7 +126,7 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
           onClick={() => {
             dispatch(resetGameState());
             setIsMainMenuShown(false);
-            select.play();
+            makeSelectSound();
           }}
           className={`main-menu__button ${
             optionSelected === 0 ? 'active' : ''
@@ -132,7 +141,7 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
             onFocus={() => setOptionSelected(1)}
             onClick={() => {
               setIsMainMenuShown(false);
-              select.play();
+              makeSelectSound();
             }}
             className={`main-menu__button ${
               optionSelected === 1 ? 'active' : ''

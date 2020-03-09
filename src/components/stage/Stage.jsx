@@ -1,15 +1,9 @@
 import React, { useEffect, useState, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import UIFx from 'uifx';
 
 import Player from 'components/player';
 import * as stageBackgroundImage from 'assets/map/map1.png';
-import bumpMp3 from 'assets/sounds/bump.mp3';
-import selectMp3 from 'assets/sounds/select.mp3';
-import menuMp3 from 'assets/sounds/menu-toggle.mp3';
-import correctMp3 from 'assets/sounds/correct.mp3';
-import wrongMp3 from 'assets/sounds/wrong.mp3';
 import {
   checkIfValidPosition,
   isNextToSign,
@@ -22,26 +16,9 @@ import SignMenu from 'components/signMenu';
 import DoorConfirmationMenu from 'components/doorConfirmationMenu';
 import QuestionMenu from 'components/questionMenu';
 import { updateGameState } from 'reducers/gameDux';
+import { useSfx } from 'contexts/sfxContext';
 
 import './Stage.scss';
-
-const bump = new UIFx(bumpMp3, {
-  preload: 'automatic'
-});
-
-const select = new UIFx(selectMp3, {
-  volume: 0.5
-});
-
-const menuToggle = new UIFx(menuMp3);
-
-const correct = new UIFx(correctMp3, {
-  volume: 0.7
-});
-
-const wrong = new UIFx(wrongMp3, {
-  volume: 0.7
-});
 
 const Container = styled.div.attrs(props => ({
   style: { transform: `translate(${props.x}px, ${props.y}px)` }
@@ -68,6 +45,8 @@ const StageBackgroundImage = styled.img`
 `;
 
 const Stage = () => {
+  const { makeBumpSound, makeSelectSound } = useSfx();
+  const [lastBump, setLastBump] = useState();
   const game = useSelector(state => state.game);
   const { currentRoom, currentLevel } = game;
 
@@ -112,52 +91,60 @@ const Stage = () => {
           // LEFT
           if (direction !== 2) {
             setDirection(2);
+            setLastBump();
           }
           if (!isMoving) {
             setIsMoving(true);
+            setLastBump();
           }
           break;
         case 38:
           // UP
           if (direction !== 4) {
             setDirection(4);
+            setLastBump();
           }
           if (!isMoving) {
             setIsMoving(true);
+            setLastBump();
           }
           break;
         case 39:
           // RIGHT
           if (direction !== 3) {
             setDirection(3);
+            setLastBump();
           }
           if (!isMoving) {
             setIsMoving(true);
+            setLastBump();
           }
           break;
         case 40:
           // DOWN
           if (direction !== 1) {
             setDirection(1);
+            setLastBump();
           }
           if (!isMoving) {
             setIsMoving(true);
+            setLastBump();
           }
           break;
         case 88:
           if (isNextToSign(position, scale)) {
             setMenuState({ isSignMenuShown: true });
             setIsMoving(false);
-            select.play();
+            makeSelectSound();
           }
           if (isNextToLeftDoor(position, scale)) {
             setDoorState({ doorSelected: 'left', isConfirmingDoor: true });
-            select.play();
+            makeSelectSound();
             setIsMoving(false);
           }
           if (isNextToRightDoor(position, scale)) {
             setDoorState({ doorSelected: 'right', isConfirmingDoor: true });
-            select.play();
+            makeSelectSound();
             setIsMoving(false);
           }
           break;
@@ -169,7 +156,7 @@ const Stage = () => {
           ) {
             setMenuState({ isPauseMenuShown: true });
             setIsMoving(false);
-            select.play();
+            makeSelectSound();
           }
           break;
         default:
@@ -221,8 +208,16 @@ const Stage = () => {
       }
       if (checkIfValidPosition(newPosition, scale)) {
         await setPosition(newPosition);
+      } else if (lastBump) {
+        const curr = new Date();
+        if (curr - lastBump > 1000) {
+          makeBumpSound();
+          setLastBump(curr);
+        }
       } else {
-        bump.play();
+        const curr = new Date();
+        makeBumpSound();
+        setLastBump(curr);
       }
     };
 
@@ -260,7 +255,10 @@ const Stage = () => {
     menuState.isPauseMenuShown,
     menuState.isSignMenuShown,
     doorState.isConfirmingDoor,
-    doorState.showDoorQuestion
+    doorState.showDoorQuestion,
+    makeSelectSound,
+    lastBump,
+    makeBumpSound
   ]);
 
   const handleSinglePositionChange = async (dir, change) => {
@@ -368,25 +366,18 @@ const Stage = () => {
           }
           handleQuestionSubmit={handleQuestionSubmit}
           dismissQuestion={dismissQuestion}
-          select={select}
-          menuToggle={menuToggle}
-          correct={correct}
-          wrong={wrong}
         />
       )}
       {doorState.isConfirmingDoor && (
         <DoorConfirmationMenu
           doorSelected={doorState.doorSelected}
           confirmDoorSelection={confirmDoorSelection}
-          select={select}
-          menuToggle={menuToggle}
         />
       )}
       {menuState.isSignMenuShown && (
         <SignMenu
           currentLevel={currentLevel}
           setIsSignMenuShown={value => setMenuState({ isSignMenuShown: value })}
-          select={select}
         />
       )}
       {menuState.isPauseMenuShown && (
@@ -395,15 +386,11 @@ const Stage = () => {
             setMenuState({ isPauseMenuShown: value })
           }
           backToMenu={backToMenu}
-          select={select}
-          menuToggle={menuToggle}
         />
       )}
       {menuState.isMainMenuShown && (
         <MainMenu
           setIsMainMenuShown={value => setMenuState({ isMainMenuShown: value })}
-          select={select}
-          menuToggle={menuToggle}
         />
       )}
       <Container x={position.x} y={position.y} transition={transition}>
