@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { getQuestionAtId } from 'data/questions';
-import { useSfx } from 'contexts/sfxContext';
 
 import './QuestionMenu.scss';
 
@@ -43,14 +42,12 @@ const Instruction = styled.p`
 const QuestionMenu = ({
   questionId,
   handleQuestionSubmit,
-  dismissQuestion
+  dismissQuestion,
+  select,
+  menuToggle,
+  correct,
+  wrong
 }) => {
-  const {
-    makeSelectSound,
-    makeMenuSound,
-    makeCorrectSound,
-    makeWrongSound
-  } = useSfx();
   const isScaled = window.innerWidth < 313 * 1.5;
   const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
@@ -79,14 +76,14 @@ const QuestionMenu = ({
           // UP
           if (optionSelected > 0) {
             setOptionSelected(optionSelected - 1);
-            makeMenuSound();
+            menuToggle.play();
           }
           break;
         case 40:
           // DOWN
           if (optionSelected < 3) {
             setOptionSelected(optionSelected + 1);
-            makeMenuSound();
+            menuToggle.play();
           }
           break;
         case 88:
@@ -95,12 +92,12 @@ const QuestionMenu = ({
             question.question === "Oops! We're still designing questions!" &&
             question.correctAnswer === "I'll come back later!"
           ) {
-            makeSelectSound();
+            select.play();
             dismissQuestion();
             break;
           }
           if (isQuestionCorrect !== null) {
-            makeSelectSound();
+            select.play();
             dismissQuestion();
             break;
           }
@@ -112,9 +109,9 @@ const QuestionMenu = ({
               questionAnswers[optionSelected] === question.correctAnswer
           };
           if (data.isCorrect) {
-            makeCorrectSound();
+            correct.play();
           } else {
-            makeWrongSound();
+            wrong.play();
           }
           handleQuestionSubmit(data);
           setIsQuestionCorrect(data.isCorrect);
@@ -137,10 +134,10 @@ const QuestionMenu = ({
     question.question,
     dismissQuestion,
     isQuestionCorrect,
-    makeCorrectSound,
-    makeMenuSound,
-    makeSelectSound,
-    makeWrongSound
+    correct,
+    wrong,
+    select,
+    menuToggle
   ]);
 
   if (isQuestionCorrect !== null) {
@@ -157,7 +154,7 @@ const QuestionMenu = ({
           <button
             type="button"
             onClick={() => {
-              makeSelectSound();
+              select.play();
               dismissQuestion();
             }}
             className="question-menu__button active"
@@ -186,7 +183,7 @@ const QuestionMenu = ({
                   "Oops! We're still designing questions!" &&
                 question.correctAnswer === "I'll come back later!"
               ) {
-                makeSelectSound();
+                select.play();
                 dismissQuestion();
                 return;
               }
@@ -198,9 +195,9 @@ const QuestionMenu = ({
                   questionAnswers[optionSelected] === question.correctAnswer
               };
               if (data.isCorrect) {
-                makeCorrectSound();
+                correct.play();
               } else {
-                makeWrongSound();
+                wrong.play();
               }
               handleQuestionSubmit(data);
               setIsQuestionCorrect(data.isCorrect);

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { useSfx } from 'contexts/sfxContext';
-
 import './DoorConfirmationMenu.scss';
 
 const Container = styled.div`
@@ -39,8 +37,12 @@ const Instruction = styled.p`
   font-size: 1.6rem;
 `;
 
-const DoorConfirmationMenu = ({ confirmDoorSelection, doorSelected }) => {
-  const { makeSelectSound, makeMenuSound } = useSfx();
+const DoorConfirmationMenu = ({
+  confirmDoorSelection,
+  doorSelected,
+  select,
+  menuToggle
+}) => {
   const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
 
@@ -51,24 +53,24 @@ const DoorConfirmationMenu = ({ confirmDoorSelection, doorSelected }) => {
         case 38:
           // UP
           if (optionSelected > 0) {
-            makeMenuSound();
+            await menuToggle.play();
             setOptionSelected(optionSelected - 1);
           }
           break;
         case 40:
           // DOWN
           if (optionSelected < 1) {
-            makeMenuSound();
+            await menuToggle.play();
             setOptionSelected(optionSelected + 1);
           }
           break;
         case 88:
           // X
           if (optionSelected === 0) {
-            makeSelectSound();
+            await select.play();
             confirmDoorSelection(true);
           } else if (optionSelected === 1) {
-            makeSelectSound();
+            await select.play();
             confirmDoorSelection(false);
           }
           break;
@@ -82,7 +84,7 @@ const DoorConfirmationMenu = ({ confirmDoorSelection, doorSelected }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [confirmDoorSelection, optionSelected, makeSelectSound, makeMenuSound]);
+  }, [confirmDoorSelection, optionSelected, select, menuToggle]);
 
   return (
     <Container height={side} width={side}>
@@ -98,7 +100,7 @@ const DoorConfirmationMenu = ({ confirmDoorSelection, doorSelected }) => {
           onMouseOver={() => setOptionSelected(0)}
           onFocus={() => setOptionSelected(0)}
           onClick={async () => {
-            makeSelectSound();
+            await select.play();
             confirmDoorSelection(true);
           }}
           className={`door-confirmation-menu__button ${
@@ -112,7 +114,7 @@ const DoorConfirmationMenu = ({ confirmDoorSelection, doorSelected }) => {
           onMouseOver={() => setOptionSelected(1)}
           onFocus={() => setOptionSelected(1)}
           onClick={async () => {
-            makeSelectSound();
+            await select.play();
             confirmDoorSelection(false);
           }}
           className={`door-confirmation-menu__button ${
