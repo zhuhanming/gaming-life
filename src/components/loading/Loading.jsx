@@ -25,14 +25,14 @@ const GameTitle = styled.h1`
 `;
 
 const LoadingText = styled.p`
-  font-size: 2rem;
+  font-size: 1rem;
   margin: 1rem;
 `;
 
 const Warning = styled.p`
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   color: red;
-  margin: 0;
+  margin: 1rem;
 `;
 
 const Loading = ({ isLoading, showLoading = true }) => {

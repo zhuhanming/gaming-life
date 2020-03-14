@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { getQuestionAtId } from 'data/questions';
+import { useSfx } from 'contexts/sfxContext';
 
 import './QuestionMenu.scss';
 
@@ -28,10 +29,10 @@ const Menu = styled.div`
   background-color: darkslategray;
   color: white;
   padding: 1rem;
+  font-size: ${({ scaled }) => (scaled ? 0.8 : 1)}rem;
 `;
 
 const Instructions = styled.div`
-  font-size: ${({ scaled }) => (scaled ? 1.2 : 1.6)}rem;
   margin-bottom: 2rem;
 `;
 
@@ -46,8 +47,15 @@ const QuestionMenu = ({
   select,
   menuToggle,
   correct,
-  wrong
+  wrong,
+  isSafari = false
 }) => {
+  const {
+    makeSelectSound,
+    makeMenuSound,
+    makeCorrectSound,
+    makeWrongSound
+  } = useSfx();
   const isScaled = window.innerWidth < 313 * 1.5;
   const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
@@ -76,14 +84,22 @@ const QuestionMenu = ({
           // UP
           if (optionSelected > 0) {
             setOptionSelected(optionSelected - 1);
-            menuToggle.play();
+            if (isSafari) {
+              makeMenuSound();
+            } else {
+              menuToggle.play();
+            }
           }
           break;
         case 40:
           // DOWN
-          if (optionSelected < 3) {
+          if (optionSelected < questionAnswers.length - 1) {
             setOptionSelected(optionSelected + 1);
-            menuToggle.play();
+            if (isSafari) {
+              makeMenuSound();
+            } else {
+              menuToggle.play();
+            }
           }
           break;
         case 88:
@@ -92,12 +108,20 @@ const QuestionMenu = ({
             question.question === "Oops! We're still designing questions!" &&
             question.correctAnswer === "I'll come back later!"
           ) {
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
             dismissQuestion();
             break;
           }
           if (isQuestionCorrect !== null) {
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
             dismissQuestion();
             break;
           }
@@ -109,7 +133,13 @@ const QuestionMenu = ({
               questionAnswers[optionSelected] === question.correctAnswer
           };
           if (data.isCorrect) {
-            correct.play();
+            if (isSafari) {
+              makeCorrectSound();
+            } else {
+              correct.play();
+            }
+          } else if (isSafari) {
+            makeWrongSound();
           } else {
             wrong.play();
           }
@@ -137,14 +167,19 @@ const QuestionMenu = ({
     correct,
     wrong,
     select,
-    menuToggle
+    menuToggle,
+    isSafari,
+    makeCorrectSound,
+    makeMenuSound,
+    makeSelectSound,
+    makeWrongSound
   ]);
 
   if (isQuestionCorrect !== null) {
     return (
       <Container height={side} width={side}>
-        <Menu className="question-menu">
-          <Instructions scaled={isScaled}>
+        <Menu className="question-menu" scaled={isScaled}>
+          <Instructions>
             <Instruction>
               {isQuestionCorrect
                 ? 'Excellent! Correct answer!'
@@ -154,7 +189,11 @@ const QuestionMenu = ({
           <button
             type="button"
             onClick={() => {
-              select.play();
+              if (isSafari) {
+                makeSelectSound();
+              } else {
+                select.play();
+              }
               dismissQuestion();
             }}
             className="question-menu__button active"
@@ -183,7 +222,11 @@ const QuestionMenu = ({
                   "Oops! We're still designing questions!" &&
                 question.correctAnswer === "I'll come back later!"
               ) {
-                select.play();
+                if (isSafari) {
+                  makeSelectSound();
+                } else {
+                  select.play();
+                }
                 dismissQuestion();
                 return;
               }
@@ -195,7 +238,13 @@ const QuestionMenu = ({
                   questionAnswers[optionSelected] === question.correctAnswer
               };
               if (data.isCorrect) {
-                correct.play();
+                if (isSafari) {
+                  makeCorrectSound();
+                } else {
+                  correct.play();
+                }
+              } else if (isSafari) {
+                makeWrongSound();
               } else {
                 wrong.play();
               }

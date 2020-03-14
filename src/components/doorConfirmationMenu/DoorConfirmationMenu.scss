@@ -3,10 +3,4 @@
 .door-confirmation-menu {
   box-sizing: border-box;
   @include bitborder(6px, white);
-
-  @media screen and (max-width: 768px) {
-    p {
-      font-size: 1.2rem;
-    }
-  }
 }

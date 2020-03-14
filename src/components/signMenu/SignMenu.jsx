@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { useSfx } from 'contexts/sfxContext';
+
 import './SignMenu.scss';
 
 const Container = styled.div`
@@ -17,6 +19,7 @@ const Container = styled.div`
 `;
 
 const Menu = styled.div`
+  font-size: ${({ scaled }) => (scaled ? 0.8 : 1)}rem;
   height: auto;
   width: 80%;
   display: flex;
@@ -29,7 +32,6 @@ const Menu = styled.div`
 `;
 
 const Instructions = styled.div`
-  font-size: ${({ scaled }) => (scaled ? 1.2 : 1.6)}rem;
   margin-bottom: 2rem;
 `;
 
@@ -37,7 +39,13 @@ const Instruction = styled.p`
   margin: 0.1rem;
 `;
 
-const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
+const SignMenu = ({
+  setIsSignMenuShown,
+  currentLevel,
+  select,
+  isSafari = false
+}) => {
+  const { makeSelectSound } = useSfx();
   const isScaled = window.innerWidth < 313 * 1.5;
   const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
@@ -50,7 +58,11 @@ const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
           // X
           if (optionSelected === 0) {
             setIsSignMenuShown(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }
           break;
         default:
@@ -63,12 +75,12 @@ const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [setIsSignMenuShown, optionSelected, select]);
+  }, [setIsSignMenuShown, optionSelected, select, isSafari, makeSelectSound]);
 
   return (
     <Container height={side} width={side}>
-      <Menu className="sign-menu">
-        <Instructions scaled={isScaled}>
+      <Menu className="sign-menu" scaled={isScaled}>
+        <Instructions>
           <Instruction>Question #{currentLevel}.</Instruction>
           <Instruction>Choose one of the two doors above.</Instruction>
           <Instruction>Each door leads to a question of its own.</Instruction>
@@ -79,7 +91,11 @@ const SignMenu = ({ setIsSignMenuShown, currentLevel, select }) => {
           onFocus={() => setOptionSelected(0)}
           onClick={() => {
             setIsSignMenuShown(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }}
           className={`sign-menu__button ${
             optionSelected === 0 ? 'active' : ''

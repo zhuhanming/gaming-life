@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { isBrowser, isSafari } from 'react-device-detect';
 
 import Loading from 'components/loading';
-import SafariStage from 'safariComponents/safariStage';
 import Stage from 'components/stage';
 import Sounds from 'components/sounds/Sounds';
 
@@ -38,25 +37,15 @@ const App = () => {
 
   return (
     <React.Suspense fallback={<Loading isLoading />}>
-      {isBrowser && isSafari && (
-        <>
-          <Sounds />
-          <div className="App">
-            <header className="App-header">
-              {showLoading && <Loading isLoading={false} />}
-              <SafariStage />
-            </header>
-          </div>
-        </>
-      )}
-      {!(isBrowser && isSafari) && (
+      <>
+        {isBrowser && isSafari && <Sounds />}
         <div className="App">
           <header className="App-header">
             {showLoading && <Loading isLoading={false} />}
-            <Stage />
+            <Stage isSafari={isBrowser && isSafari} />
           </header>
         </div>
-      )}
+      </>
     </React.Suspense>
   );
 };

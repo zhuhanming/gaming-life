@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { resetGameState } from 'reducers/gameDux';
+import { useSfx } from 'contexts/sfxContext';
 
 import './MainMenu.scss';
 
@@ -30,16 +31,17 @@ const GameTitle = styled.h1`
 const Menu = styled.div`
   height: calc(80% - 5rem);
   width: 80%;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: darkslategray;
   color: white;
+  font-size: ${({ scaled }) => (scaled ? 0.8 : 1)}rem;
 `;
 
 const Instructions = styled.div`
-  font-size: ${({ scaled }) => (scaled ? 1.2 : 1.6)}rem;
   margin-bottom: 2rem;
 `;
 
@@ -47,7 +49,13 @@ const Instruction = styled.p`
   margin: 0.1rem;
 `;
 
-const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
+const MainMenu = ({
+  setIsMainMenuShown,
+  select,
+  menuToggle,
+  isSafari = false
+}) => {
+  const { makeSelectSound, makeMenuSound } = useSfx();
   const dispatch = useDispatch();
   const isScaled = window.innerWidth < 313 * 1.5;
   const side = isScaled ? window.innerWidth : 313 * 1.5;
@@ -64,24 +72,40 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
           // UP
           if (optionSelected > 0) {
             setOptionSelected(optionSelected - 1);
-            menuToggle.play();
+            if (isSafari) {
+              makeMenuSound();
+            } else {
+              menuToggle.play();
+            }
           }
           break;
         case 40:
           // DOWN
           if (optionSelected < (canResume ? 1 : 0)) {
             setOptionSelected(optionSelected + 1);
-            menuToggle.play();
+            if (isSafari) {
+              makeMenuSound();
+            } else {
+              menuToggle.play();
+            }
           }
           break;
         case 88:
           if (optionSelected === 0) {
             dispatch(resetGameState());
             setIsMainMenuShown(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           } else if (optionSelected === 1) {
             setIsMainMenuShown(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }
           break;
         default:
@@ -99,8 +123,8 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
   return (
     <Container height={side} width={side}>
       <GameTitle>Gaming Life</GameTitle>
-      <Menu className="main-menu">
-        <Instructions scaled={isScaled}>
+      <Menu className="main-menu" scaled={isScaled}>
+        <Instructions>
           <Instruction>
             {canResume
               ? 'You have an ongoing game.'
@@ -117,7 +141,11 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
           onClick={() => {
             dispatch(resetGameState());
             setIsMainMenuShown(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }}
           className={`main-menu__button ${
             optionSelected === 0 ? 'active' : ''
@@ -132,7 +160,11 @@ const MainMenu = ({ setIsMainMenuShown, select, menuToggle }) => {
             onFocus={() => setOptionSelected(1)}
             onClick={() => {
               setIsMainMenuShown(false);
-              select.play();
+              if (isSafari) {
+                makeSelectSound();
+              } else {
+                select.play();
+              }
             }}
             className={`main-menu__button ${
               optionSelected === 1 ? 'active' : ''

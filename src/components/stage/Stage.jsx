@@ -22,6 +22,7 @@ import SignMenu from 'components/signMenu';
 import DoorConfirmationMenu from 'components/doorConfirmationMenu';
 import QuestionMenu from 'components/questionMenu';
 import { updateGameState } from 'reducers/gameDux';
+import { useSfx } from 'contexts/sfxContext';
 
 import './Stage.scss';
 
@@ -65,7 +66,9 @@ const StageBackgroundImage = styled.img`
   -ms-user-select: none;
 `;
 
-const Stage = () => {
+const Stage = ({ isSafari = false }) => {
+  const { makeBumpSound, makeSelectSound } = useSfx();
+  const [lastBump, setLastBump] = useState();
   const game = useSelector(state => state.game);
   const { currentRoom, currentLevel } = game;
 
@@ -110,53 +113,89 @@ const Stage = () => {
           // LEFT
           if (direction !== 2) {
             setDirection(2);
+            if (isSafari) {
+              setLastBump();
+            }
           }
           if (!isMoving) {
             setIsMoving(true);
+            if (isSafari) {
+              setLastBump();
+            }
           }
           break;
         case 38:
           // UP
           if (direction !== 4) {
             setDirection(4);
+            if (isSafari) {
+              setLastBump();
+            }
           }
           if (!isMoving) {
             setIsMoving(true);
+            if (isSafari) {
+              setLastBump();
+            }
           }
           break;
         case 39:
           // RIGHT
           if (direction !== 3) {
             setDirection(3);
+            if (isSafari) {
+              setLastBump();
+            }
           }
           if (!isMoving) {
             setIsMoving(true);
+            if (isSafari) {
+              setLastBump();
+            }
           }
           break;
         case 40:
           // DOWN
           if (direction !== 1) {
             setDirection(1);
+            if (isSafari) {
+              setLastBump();
+            }
           }
           if (!isMoving) {
             setIsMoving(true);
+            if (isSafari) {
+              setLastBump();
+            }
           }
           break;
         case 88:
           if (isNextToSign(position, scale)) {
             setMenuState({ isSignMenuShown: true });
             setIsMoving(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }
           if (isNextToLeftDoor(position, scale)) {
             setDoorState({ doorSelected: 'left', isConfirmingDoor: true });
-            select.play();
             setIsMoving(false);
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }
           if (isNextToRightDoor(position, scale)) {
             setDoorState({ doorSelected: 'right', isConfirmingDoor: true });
-            select.play();
             setIsMoving(false);
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }
           break;
         case 80:
@@ -167,7 +206,11 @@ const Stage = () => {
           ) {
             setMenuState({ isPauseMenuShown: true });
             setIsMoving(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }
           break;
         default:
@@ -219,8 +262,18 @@ const Stage = () => {
       }
       if (checkIfValidPosition(newPosition, scale)) {
         await setPosition(newPosition);
-      } else {
+      } else if (!isSafari) {
         bump.play();
+      } else if (lastBump) {
+        const curr = new Date();
+        if (curr - lastBump > 1000) {
+          makeBumpSound();
+          setLastBump(curr);
+        }
+      } else {
+        const curr = new Date();
+        makeBumpSound();
+        setLastBump(curr);
       }
     };
 
@@ -258,7 +311,11 @@ const Stage = () => {
     menuState.isPauseMenuShown,
     menuState.isSignMenuShown,
     doorState.isConfirmingDoor,
-    doorState.showDoorQuestion
+    doorState.showDoorQuestion,
+    isSafari,
+    lastBump,
+    makeBumpSound,
+    makeSelectSound
   ]);
 
   const handleSinglePositionChange = async (dir, change) => {
@@ -370,6 +427,7 @@ const Stage = () => {
           menuToggle={menuToggle}
           correct={correct}
           wrong={wrong}
+          isSafari={isSafari}
         />
       )}
       {doorState.isConfirmingDoor && (
@@ -378,6 +436,7 @@ const Stage = () => {
           confirmDoorSelection={confirmDoorSelection}
           select={select}
           menuToggle={menuToggle}
+          isSafari={isSafari}
         />
       )}
       {menuState.isSignMenuShown && (
@@ -385,6 +444,7 @@ const Stage = () => {
           currentLevel={currentLevel}
           setIsSignMenuShown={value => setMenuState({ isSignMenuShown: value })}
           select={select}
+          isSafari={isSafari}
         />
       )}
       {menuState.isPauseMenuShown && (
@@ -395,6 +455,7 @@ const Stage = () => {
           backToMenu={backToMenu}
           select={select}
           menuToggle={menuToggle}
+          isSafari={isSafari}
         />
       )}
       {menuState.isMainMenuShown && (
@@ -402,6 +463,7 @@ const Stage = () => {
           setIsMainMenuShown={value => setMenuState({ isMainMenuShown: value })}
           select={select}
           menuToggle={menuToggle}
+          isSafari={isSafari}
         />
       )}
       <Container x={position.x} y={position.y} transition={transition}>

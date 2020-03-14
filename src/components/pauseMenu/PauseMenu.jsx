@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { useSfx } from 'contexts/sfxContext';
+
 import './PauseMenu.scss';
 
 const Container = styled.div`
@@ -27,16 +29,17 @@ const GameTitle = styled.h1`
 const Menu = styled.div`
   height: calc(80% - 5rem);
   width: 80%;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: darkslategray;
   color: white;
+  font-size: ${({ scaled }) => (scaled ? 0.8 : 1)}rem;
 `;
 
 const Instructions = styled.div`
-  font-size: ${({ scaled }) => (scaled ? 1.2 : 1.6)}rem;
   margin-bottom: 2rem;
 `;
 
@@ -44,7 +47,14 @@ const Instruction = styled.p`
   margin: 0.1rem;
 `;
 
-const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
+const PauseMenu = ({
+  setIsPauseMenuShown,
+  backToMenu,
+  select,
+  menuToggle,
+  isSafari = false
+}) => {
+  const { makeSelectSound, makeMenuSound } = useSfx();
   const isScaled = window.innerWidth < 313 * 1.5;
   const side = isScaled ? window.innerWidth : 313 * 1.5;
   const [optionSelected, setOptionSelected] = useState(0);
@@ -57,24 +67,49 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
           // UP
           if (optionSelected > 0) {
             setOptionSelected(optionSelected - 1);
-            menuToggle.play();
+            if (isSafari) {
+              makeMenuSound();
+            } else {
+              menuToggle.play();
+            }
           }
           break;
         case 40:
           // DOWN
           if (optionSelected < 1) {
             setOptionSelected(optionSelected + 1);
-            menuToggle.play();
+            if (isSafari) {
+              makeMenuSound();
+            } else {
+              menuToggle.play();
+            }
+          }
+          break;
+        case 80:
+          // P
+          setIsPauseMenuShown(false);
+          if (isSafari) {
+            makeSelectSound();
+          } else {
+            select.play();
           }
           break;
         case 88:
           // X
           if (optionSelected === 0) {
             setIsPauseMenuShown(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           } else if (optionSelected === 1) {
             backToMenu();
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }
           break;
         default:
@@ -87,13 +122,22 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
     return () => {
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [setIsPauseMenuShown, optionSelected, backToMenu, select, menuToggle]);
+  }, [
+    setIsPauseMenuShown,
+    optionSelected,
+    backToMenu,
+    select,
+    menuToggle,
+    isSafari,
+    makeMenuSound,
+    makeSelectSound
+  ]);
 
   return (
     <Container height={side} width={side}>
       <GameTitle>Paused</GameTitle>
-      <Menu className="pause-menu">
-        <Instructions scaled={isScaled}>
+      <Menu className="pause-menu" scaled={isScaled}>
+        <Instructions>
           <Instruction>Arrow keys to move.</Instruction>
           <Instruction>X to interact.</Instruction>
           <Instruction>P to pause.</Instruction>
@@ -104,7 +148,11 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
           onFocus={() => setOptionSelected(0)}
           onClick={() => {
             setIsPauseMenuShown(false);
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }}
           className={`pause-menu__button ${
             optionSelected === 0 ? 'active' : ''
@@ -119,7 +167,11 @@ const PauseMenu = ({ setIsPauseMenuShown, backToMenu, select, menuToggle }) => {
           }`}
           onClick={() => {
             backToMenu();
-            select.play();
+            if (isSafari) {
+              makeSelectSound();
+            } else {
+              select.play();
+            }
           }}
         >
           Back to Main Menu

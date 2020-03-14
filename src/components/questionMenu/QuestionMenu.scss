@@ -3,4 +3,9 @@
 .question-menu {
   box-sizing: border-box;
   @include bitborder(6px, white);
+
+  button {
+    font-size: 0.8rem !important;
+    line-height: 1.3rem;
+  }
 }
