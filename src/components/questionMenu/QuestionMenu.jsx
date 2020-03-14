@@ -128,7 +128,7 @@ const QuestionMenu = ({
           // eslint-disable-next-line no-case-declarations
           const data = {
             question: question.question,
-            optionSelected,
+            optionSelected: questionAnswers[optionSelected],
             isCorrect:
               questionAnswers[optionSelected] === question.correctAnswer
           };
@@ -233,7 +233,7 @@ const QuestionMenu = ({
               // eslint-disable-next-line no-case-declarations
               const data = {
                 question: question.question,
-                optionSelected,
+                optionSelected: questionAnswers[optionSelected],
                 isCorrect:
                   questionAnswers[optionSelected] === question.correctAnswer
               };
