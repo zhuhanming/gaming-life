@@ -23,6 +23,7 @@ import DoorConfirmationMenu from 'components/doorConfirmationMenu';
 import QuestionMenu from 'components/questionMenu';
 import { updateGameState } from 'reducers/gameDux';
 import { useSfx } from 'contexts/sfxContext';
+import ProgressBar from 'components/progressBar';
 
 import './Stage.scss';
 
@@ -414,6 +415,11 @@ const Stage = ({ isSafari = false }) => {
 
   return (
     <>
+      {!menuState.isMainMenuShown && (
+        <ProgressBar
+          width={window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5}
+        />
+      )}
       {doorState.showDoorQuestion && (
         <QuestionMenu
           questionId={
