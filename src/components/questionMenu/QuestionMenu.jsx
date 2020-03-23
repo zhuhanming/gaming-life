@@ -48,7 +48,8 @@ const QuestionMenu = ({
   menuToggle,
   correct,
   wrong,
-  isSafari = false
+  isSafari = false,
+  previousCorrectAnswer
 }) => {
   const {
     makeSelectSound,
@@ -143,7 +144,7 @@ const QuestionMenu = ({
           } else {
             wrong.play();
           }
-          handleQuestionSubmit(data);
+          handleQuestionSubmit(data, question.correctAnswer);
           setIsQuestionCorrect(data.isCorrect);
           break;
         default:
@@ -183,8 +184,14 @@ const QuestionMenu = ({
             <Instruction>
               {isQuestionCorrect
                 ? 'Excellent! Correct answer!'
-                : 'Uh-oh! Try harder for the next question!'}
+                : 'Uh-oh! The correct answer was:'}
             </Instruction>
+            {!isQuestionCorrect && (
+              <Instruction>&quot;{previousCorrectAnswer}&quot;</Instruction>
+            )}
+            {!isQuestionCorrect && (
+              <Instruction>Try harder for the next question!</Instruction>
+            )}
           </Instructions>
           <button
             type="button"

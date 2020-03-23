@@ -71,6 +71,7 @@ const StageBackgroundImage = styled.img`
 const Stage = ({ isSafari = false, isMobile = false }) => {
   const { makeBumpSound, makeSelectSound } = useSfx();
   const [lastBump, setLastBump] = useState();
+  const [previousCorrectAnswer, setPreviousCorrectAnswer] = useState(null);
   const game = useSelector(state => state.game);
   const { currentRoom, currentLevel } = game;
 
@@ -454,7 +455,7 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
     }
   };
 
-  const handleQuestionSubmit = data => {
+  const handleQuestionSubmit = (data, correctAnswer) => {
     setTransition(0);
     setDirection(4);
     setPosition({
@@ -467,6 +468,7 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
     setDoorState({
       doorSelected: null
     });
+    setPreviousCorrectAnswer(correctAnswer);
     dispatch(
       updateGameState({
         ...data,
@@ -547,6 +549,7 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
           correct={correct}
           wrong={wrong}
           isSafari={isSafari}
+          previousCorrectAnswer={previousCorrectAnswer}
         />
       )}
       {doorState.isConfirmingDoor && (
