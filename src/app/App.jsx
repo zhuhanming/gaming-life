@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { isBrowser, isSafari } from 'react-device-detect';
+import { isBrowser, isSafari, isMobile } from 'react-device-detect';
 
 import Loading from 'components/loading';
 import Stage from 'components/stage';
-import Sounds from 'components/sounds/Sounds';
+import Sounds from 'components/sounds';
 
 import './App.scss';
 
@@ -42,7 +42,7 @@ const App = () => {
         <div className="App">
           <header className="App-header">
             {showLoading && <Loading isLoading={false} />}
-            <Stage isSafari={isBrowser && isSafari} />
+            <Stage isSafari={isBrowser && isSafari} isMobile={isMobile} />
           </header>
         </div>
       </>
