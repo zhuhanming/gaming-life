@@ -14,6 +14,12 @@ const ButtonContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   height: ${({ width }) => width / 3}px;
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 `;
 
 const Buttons = ({
