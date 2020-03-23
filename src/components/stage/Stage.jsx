@@ -24,6 +24,7 @@ import QuestionMenu from 'components/questionMenu';
 import { updateGameState } from 'reducers/gameDux';
 import { useSfx } from 'contexts/sfxContext';
 import ProgressBar from 'components/progressBar';
+import Buttons from 'components/buttons';
 
 import './Stage.scss';
 
@@ -67,7 +68,7 @@ const StageBackgroundImage = styled.img`
   -ms-user-select: none;
 `;
 
-const Stage = ({ isSafari = false }) => {
+const Stage = ({ isSafari = false, isMobile = false }) => {
   const { makeBumpSound, makeSelectSound } = useSfx();
   const [lastBump, setLastBump] = useState();
   const game = useSelector(state => state.game);
@@ -319,6 +320,100 @@ const Stage = ({ isSafari = false }) => {
     makeSelectSound
   ]);
 
+  const handleLeft = () => {
+    if (direction !== 2) {
+      setDirection(2);
+      if (isSafari) {
+        setLastBump();
+      }
+    }
+    if (!isMoving) {
+      setIsMoving(true);
+      if (isSafari) {
+        setLastBump();
+      }
+    }
+  };
+
+  const handleRight = () => {
+    if (direction !== 3) {
+      setDirection(3);
+      if (isSafari) {
+        setLastBump();
+      }
+    }
+    if (!isMoving) {
+      setIsMoving(true);
+      if (isSafari) {
+        setLastBump();
+      }
+    }
+  };
+
+  const handleUp = () => {
+    if (direction !== 4) {
+      setDirection(4);
+      if (isSafari) {
+        setLastBump();
+      }
+    }
+    if (!isMoving) {
+      setIsMoving(true);
+      if (isSafari) {
+        setLastBump();
+      }
+    }
+  };
+
+  const handleDown = () => {
+    if (direction !== 1) {
+      setDirection(1);
+      if (isSafari) {
+        setLastBump();
+      }
+    }
+    if (!isMoving) {
+      setIsMoving(true);
+      if (isSafari) {
+        setLastBump();
+      }
+    }
+  };
+
+  const handleSelect = () => {
+    if (isNextToSign(position, scale)) {
+      setMenuState({ isSignMenuShown: true });
+      setIsMoving(false);
+      if (isSafari) {
+        makeSelectSound();
+      } else {
+        select.play();
+      }
+    }
+    if (isNextToLeftDoor(position, scale)) {
+      setDoorState({ doorSelected: 'left', isConfirmingDoor: true });
+      setIsMoving(false);
+      if (isSafari) {
+        makeSelectSound();
+      } else {
+        select.play();
+      }
+    }
+    if (isNextToRightDoor(position, scale)) {
+      setDoorState({ doorSelected: 'right', isConfirmingDoor: true });
+      setIsMoving(false);
+      if (isSafari) {
+        makeSelectSound();
+      } else {
+        select.play();
+      }
+    }
+  };
+
+  const handleRelease = () => {
+    setIsMoving(false);
+  };
+
   const handleSinglePositionChange = async (dir, change) => {
     let newPosition;
     switch (dir) {
@@ -415,6 +510,24 @@ const Stage = ({ isSafari = false }) => {
 
   return (
     <>
+      {isMobile &&
+        !menuState.isMainMenuShown &&
+        !menuState.isPauseMenuShown &&
+        !menuState.isSignMenuShown &&
+        !doorState.isConfirmingDoor &&
+        !doorState.showDoorQuestion && (
+          <Buttons
+            width={
+              window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5
+            }
+            handleLeft={handleLeft}
+            handleRight={handleRight}
+            handleUp={handleUp}
+            handleDown={handleDown}
+            handleSelect={handleSelect}
+            handleRelease={handleRelease}
+          />
+        )}
       {!menuState.isMainMenuShown && (
         <ProgressBar
           width={window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5}

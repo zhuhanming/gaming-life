@@ -9,9 +9,9 @@ const ProgressBarContainer = styled.div`
   position: absolute;
   z-index: 0;
   width: ${({ width }) => width}px;
-  height: 8px;
+  height: 6px;
   background-color: transparent;
-  transform: translate(0px, ${({ width }) => -(width / 2 + 4)}px);
+  transform: translate(0px, ${({ width }) => -(width / 2 + 3)}px);
   display: flex;
   justify-content: space-between;
 `;
