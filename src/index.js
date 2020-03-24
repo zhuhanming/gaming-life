@@ -12,7 +12,8 @@ import store, { persistor } from './app/store';
 import './index.scss';
 
 Sentry.init({
-  dsn: 'https://86c5ac0c278b47dd92f4ea5c116098a6@sentry.io/4109811'
+  dsn: 'https://86c5ac0c278b47dd92f4ea5c116098a6@sentry.io/4109811',
+  maxValueLength: 1000
 });
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
