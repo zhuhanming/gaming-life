@@ -378,6 +378,486 @@ const questions = {
       'Wrestling and violence',
       'High-class art'
     ]
+  },
+  54: {
+    question: 'What was the type of wrestling referred to by Barthes?',
+    correctAnswer: 'Catch-as-catch-can',
+    wrongAnswers: ['Folkstyle', 'Freestyle', 'Greco-Roman']
+  },
+  55: {
+    question: 'What makes horror movies so scary?',
+    correctAnswer: 'The music',
+    wrongAnswers: ['The lighting', 'The actors', 'The relatability']
+  },
+  56: {
+    question: 'What does wrestling play to?',
+    correctAnswer: "The spectators' justice",
+    wrongAnswers: [
+      'Sign systems',
+      'Suspension of disbelief',
+      "The spectators' desire of justice"
+    ]
+  },
+  57: {
+    question: 'What does wrestling play to?',
+    correctAnswer: "The spectators' justice",
+    wrongAnswers: [
+      'Sign systems',
+      'Suspension of disbelief',
+      "The spectators' desire for violence"
+    ]
+  },
+  58: {
+    question: 'What can the hero never do?',
+    correctAnswer: 'Seen to be excessive',
+    wrongAnswers: [
+      'Fight back against the enemy',
+      'Break the law',
+      'Ask for help'
+    ]
+  },
+  59: {
+    question: 'What can the hero never do?',
+    correctAnswer: 'Seen to be excessive',
+    wrongAnswers: [
+      'Fight back against the enemy',
+      'Break the law',
+      'Ask for help'
+    ]
+  },
+  60: {
+    question: "The word 'event' in French has an implied meaning that it",
+    correctAnswer: 'comes as a surprise',
+    wrongAnswers: [
+      'is expected',
+      'is surprising in hindsight',
+      'happens at a physical location'
+    ]
+  },
+  61: {
+    question: 'The play by Samuel Beckett mentioned in class is',
+    correctAnswer: 'Waiting for Godot',
+    wrongAnswers: ['Breath', 'Happy Days', 'Endgame']
+  },
+  62: {
+    question: "The play 'Waiting for Godot' was brought up as",
+    correctAnswer: "we discussed about 'not now'",
+    wrongAnswers: [
+      "we discussed about 'now'",
+      "we discussed about 'idiotes'",
+      "we discussed about 'polis'"
+    ]
+  },
+  63: {
+    question:
+      'Who is the artist who followed a stranger to Venice and photographed him?',
+    correctAnswer: 'Sophie Calle',
+    wrongAnswers: ['Paul Auster', 'Fabio Balducci', 'Jessica Lott']
+  },
+  64: {
+    question:
+      'Which of these works by Sophie Calle was not mentioned in class?',
+    correctAnswer: 'My All',
+    wrongAnswers: [
+      'The Address Book',
+      'Suite Venitienne',
+      'Take Care of Yourself'
+    ]
+  },
+  65: {
+    question:
+      "In Metamorphosis by Kafka, what is a more accurate translation than 'cockroach'?",
+    correctAnswer: 'vermin',
+    wrongAnswers: ['bug', 'parasite', 'trash']
+  },
+  66: {
+    question: 'Why is there a need to have prohibitions?',
+    correctAnswer: 'You will have no enjoyment',
+    wrongAnswers: [
+      'You will enjoy yourself too much',
+      'You will live too peacefully',
+      'You will have no peace'
+    ]
+  },
+  67: {
+    question: 'What does the eco in economy stand for?',
+    correctAnswer: 'Oikos; House',
+    wrongAnswers: ['Eco; Environment', 'Eco; House', 'Oikos; Environment']
+  },
+  68: {
+    question: 'What does the nomy in economy stand for?',
+    correctAnswer: 'Nomos; Law',
+    wrongAnswers: ['Nomos; Numbers', 'Numus; Numbers', 'Numus; Law']
+  },
+  69: {
+    question: 'What is the premise of a social contract?',
+    correctAnswer: 'You need to give up rights',
+    wrongAnswers: [
+      'You gain rights just by agreeing to it',
+      'You get to take away rights of others',
+      'You need to be alone'
+    ]
+  },
+  70: {
+    question: 'What is the opposite of Polis?',
+    correctAnswer: 'Idiotes',
+    wrongAnswers: ['Army', 'Country', 'Asty']
+  },
+  71: {
+    question: 'What is not a question asked at Greek gates?',
+    correctAnswer: 'What is the name of your mother?',
+    wrongAnswers: [
+      'What is your name?',
+      'Where are you from?',
+      'What are you going to do?'
+    ]
+  },
+  72: {
+    question: "What is one meaning of 'limine' that was discussed?",
+    correctAnswer: 'Where you meet strangers',
+    wrongAnswers: [
+      'Where you meet family members',
+      'Where you meet friends',
+      'Where you meet leaders'
+    ]
+  },
+  73: {
+    question: 'What does bureaucracy mean?',
+    correctAnswer: 'Power of the office',
+    wrongAnswers: ['Power of the crowd', 'Power of god', 'Power of self']
+  },
+  74: {
+    question: 'What does democracy mean mean?',
+    correctAnswer: 'Power of the crowd',
+    wrongAnswers: ['Power of the office', 'Power of god', 'Power of self']
+  },
+  75: {
+    question: 'What is not an effect of bureaucracy discussed?',
+    correctAnswer: 'Weakens employee morale and commitment',
+    wrongAnswers: [
+      'Dispersal of power across offices',
+      'No way to establish connections',
+      'No clear or single enemy'
+    ]
+  },
+  76: {
+    question: 'For law to be universal, it has to',
+    correctAnswer: 'function as an idea',
+    wrongAnswers: [
+      'have a manifestation',
+      'have many versions',
+      'be contextualised'
+    ]
+  },
+  77: {
+    question: 'What does the hap in happiness mean?',
+    correctAnswer: 'Chance',
+    wrongAnswers: ['Final', 'Positive', 'Emotion']
+  },
+  78: {
+    question: 'What does contentment mean?',
+    correctAnswer: 'Recognising good',
+    wrongAnswers: ['Recognising evil', 'Feeling good', 'Feeling evil']
+  },
+  79: {
+    question: "What does 'daimon' in endaimon stand for?",
+    correctAnswer: 'Recognition',
+    wrongAnswers: ['Feeling', 'Evil', 'Good']
+  },
+  80: {
+    question: 'Foucault was very focused on bodies and...',
+    correctAnswer: 'how power affects bodies',
+    wrongAnswers: [
+      'how beautiful bodies are defined',
+      'how bodies shape societies',
+      'contentment'
+    ]
+  },
+  81: {
+    question: 'What is a powerful surveillance device discussed?',
+    correctAnswer: 'Public opinion',
+    wrongAnswers: ['Security cameras', 'Motion sensors', 'Whiteboard magnets']
+  },
+  82: {
+    question: 'If there is no train, then there are no',
+    correctAnswer: 'train accidents',
+    wrongAnswers: ['shadows of trains', 'railways', 'train cargo']
+  },
+  83: {
+    question: 'What is often the start of resistance?',
+    correctAnswer: 'Desire',
+    wrongAnswers: ['Oppression', 'Bodies', 'Power']
+  },
+  84: {
+    question: 'What is the meaning of panopto?',
+    correctAnswer: 'All-seeing',
+    wrongAnswers: ['All-knowing', 'All-being', 'All-powerful']
+  },
+  85: {
+    question: 'What does evidence mean?',
+    correctAnswer: 'To make visible',
+    wrongAnswers: ['Proof', 'To make invisible', 'Highly obvious']
+  },
+  86: {
+    question: 'How does torture work?',
+    correctAnswer: 'Turn your body against yourself',
+    wrongAnswers: [
+      'Destroy your body and mind',
+      'Destroy your mind',
+      'Turn your mind against yourself'
+    ]
+  },
+  87: {
+    question:
+      'Which work of Deleuze and Guattari did not change post-structuralism?',
+    correctAnswer: 'What is Philosophy?',
+    wrongAnswers: ['A Thousand Plateaus', 'Anti-Oedipus']
+  },
+  88: {
+    question: 'Legal death...',
+    correctAnswer: 'puts you in the State of Nature',
+    wrongAnswers: [
+      'means you are really dead',
+      'is when you are accidentally ruled as dead',
+      'is the same as capital punishment'
+    ]
+  },
+  89: {
+    question: 'Foucault looked at snipping the snares of power...',
+    correctAnswer: 'without simply replacing those who were in power',
+    wrongAnswers: [
+      'and replacing those who were in power',
+      'and killing those who were in power',
+      'without killing those who were in power'
+    ]
+  },
+  90: {
+    question: 'What is scary about corporations today?',
+    correctAnswer: 'They have the same legal rights as a human being',
+    wrongAnswers: [
+      'They have a soul',
+      'They have power over human beings',
+      'They are prioritised over human beings'
+    ]
+  },
+  91: {
+    question: 'How did we describe Capitalism in class?',
+    correctAnswer: 'It is schizophrenic',
+    wrongAnswers: [
+      'It only works in a single context',
+      'It only works in specific contexts',
+      'It has a fixed essence'
+    ]
+  },
+  92: {
+    question: 'What is Paul Virilio known for?',
+    correctAnswer: 'Writing on how speed changed warfare',
+    wrongAnswers: [
+      'Writing on how power changed warfare',
+      'Writing on how warfare changed speed',
+      'Writing on how warfare changed power'
+    ]
+  },
+  93: {
+    question: 'Using the bunker analogy, sovereignty is like...',
+    correctAnswer: 'a single bunker',
+    wrongAnswers: [
+      'a system of bunkers',
+      'a backup bunker',
+      'a collapsed bunker'
+    ]
+  },
+  94: {
+    question:
+      'What does our education system end up doing with modular credits?',
+    correctAnswer: 'Equating the value of all activities',
+    wrongAnswers: [
+      'Motivating students to work for rewards',
+      'Setting expectations on amount of effort needed',
+      'Evaluate students based on credits'
+    ]
+  },
+  95: {
+    question: 'What can a watchword do?',
+    correctAnswer: 'Keep you in and out of an enclosure',
+    wrongAnswers: [
+      'Watch you',
+      'Act as a password of class',
+      'Act as a private password'
+    ]
+  },
+  96: {
+    question: 'What is a good reply suggested by Dr Jeremy Fernando?',
+    correctAnswer: 'I would prefer not to',
+    wrongAnswers: ['I would prefer to', 'I prefer not to', 'I prefer to']
+  },
+  97: {
+    question: 'What is the religion Manichaeism about?',
+    correctAnswer: 'Struggle between good and evil',
+    wrongAnswers: [
+      'Their God Manichae',
+      'Belief in the Greek Gods',
+      'Unity between good and evil'
+    ]
+  },
+  98: {
+    question: 'What does irony require?',
+    correctAnswer: 'Distance',
+    wrongAnswers: ['A good sense of humor', 'Iron', 'Contrast']
+  },
+  99: {
+    question: 'If there is no clear product, then the product is likely',
+    correctAnswer: 'You',
+    wrongAnswers: ['Free', 'Excellent', 'Service-based']
+  },
+  100: {
+    question: 'What was Jean Baudrillard interested in?',
+    correctAnswer: 'Messing with structures',
+    wrongAnswers: ['Enforcing structures', 'Power and bodies', 'Sign systems']
+  },
+  101: {
+    question: 'Graphi meant',
+    correctAnswer: 'Staining',
+    wrongAnswers: ['Art', 'Graffiti', 'Scratch out']
+  },
+  102: {
+    question: 'Scribble meant',
+    correctAnswer: 'Scratch out',
+    wrongAnswers: ['Art', 'Writing', 'Staining']
+  },
+  103: {
+    question: 'The French May 68 incident started due to',
+    correctAnswer: 'an argument about the dorms',
+    wrongAnswers: [
+      'an argument about the classrooms',
+      'an argument about the toilets',
+      'an argument about the dining halls'
+    ]
+  },
+  104: {
+    question: 'What is one thing that the President or King can do?',
+    correctAnswer: 'Pardon',
+    wrongAnswers: [
+      'Change the laws',
+      'Give capital punishment',
+      'Stop the spread of coronavirus'
+    ]
+  },
+  105: {
+    question: 'Immanuel Kant believed that if you break the law, you deserve',
+    correctAnswer: 'to die',
+    wrongAnswers: ['to live', 'a second chance', 'education']
+  },
+  106: {
+    question: 'The word conspire stems from',
+    correctAnswer: 'Breathing together',
+    wrongAnswers: ['Living together', 'Studying together', 'Partying together']
+  },
+  107: {
+    question: 'What does the word Manifesto mean?',
+    correctAnswer: 'To make real',
+    wrongAnswers: ['Final words', 'Mission statement', 'Public declaration']
+  },
+  108: {
+    question: 'What is it that brings an idea to the world?',
+    correctAnswer: 'Media',
+    wrongAnswers: ['Actions', 'People', 'Painting']
+  },
+  109: {
+    question: "What contention did Donna have with the word 'tool'?",
+    correctAnswer: 'Implies that it is being used',
+    wrongAnswers: [
+      'Implies that it is useless',
+      'Implies that it is usable',
+      'Implies that it is useful'
+    ]
+  },
+  110: {
+    question:
+      'What did Dr Jeremy Fernando use to demonstrate the reduction of objects?',
+    correctAnswer: 'Pen',
+    wrongAnswers: ['Paper', 'Pencil', 'Eraser']
+  },
+  111: {
+    question: 'How can a state silently censor a newspaper?',
+    correctAnswer: 'Stop their supply of pulp',
+    wrongAnswers: [
+      'Stop their supply of ink',
+      'Pass laws censoring them',
+      'Arrest the publishers'
+    ]
+  },
+  112: {
+    question: 'If you were a boss last time, you would',
+    correctAnswer: 'Have a phone',
+    wrongAnswers: ['Have no phone', 'Have a home number', 'Have no home number']
+  },
+  113: {
+    question: 'If you are a boss now, you would',
+    correctAnswer: 'Have no phone',
+    wrongAnswers: ['Have a phone', 'Have a home number', 'Have no home number']
+  },
+  114: {
+    question:
+      'What did Donna Haraway feel was a problem with Western Philosophy?',
+    correctAnswer: 'Reduction of objects',
+    wrongAnswers: [
+      'Reduction of people',
+      'Reduction of animals',
+      'Reduction of subjects'
+    ]
+  },
+  115: {
+    question: 'What is not a way to know that a wrestler is a bad person?',
+    correctAnswer: 'Smell',
+    wrongAnswers: ['Bodies', 'Gestures', 'Consistency']
+  },
+  116: {
+    question: 'What makes a watchword work?',
+    correctAnswer: 'Very few people should know it',
+    wrongAnswers: [
+      'Everyone should know it',
+      'The elite should know it',
+      'The peasants should know it'
+    ]
+  },
+  117: {
+    question: 'Why is the Scales of Justice strange?',
+    correctAnswer: 'It is balanced even with a feather on it',
+    wrongAnswers: [
+      'It is not balanced',
+      'It is held by Lady Justice',
+      'It is made out of iron'
+    ]
+  },
+  118: {
+    question: 'Which work of Sophie Calle was about a letter from her ex?',
+    correctAnswer: 'Take Care of Yourself',
+    wrongAnswers: ['The Address Book', 'Suite Venitienne', 'My All']
+  },
+  119: {
+    question: 'Which work of Sophie Calle was about her calling random people?',
+    correctAnswer: 'The Address Book',
+    wrongAnswers: ['Take Care of Yourself', 'Suite Venitienne', 'My All']
+  },
+  120: {
+    question: 'Which of the following is a character in Waiting for Godot?',
+    correctAnswer: 'Estragon',
+    wrongAnswers: ['Putin', 'Eragon', 'Samuel']
+  },
+  121: {
+    question: 'Who watches over the ancient Greek gates?',
+    correctAnswer: 'Zeus',
+    wrongAnswers: ['Apollo', 'Hera', 'Hermes']
+  },
+  122: {
+    question: 'Foucalt believed that...',
+    correctAnswer: 'thought cannot be separated from body',
+    wrongAnswers: [
+      'thought is separate from body',
+      'thought can exist without body',
+      'body can exist without thought'
+    ]
   }
 };
 
