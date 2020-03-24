@@ -25,6 +25,8 @@ import { updateGameState } from 'reducers/gameDux';
 import { useSfx } from 'contexts/sfxContext';
 import ProgressBar from 'components/progressBar';
 import Buttons from 'components/buttons';
+import CompletionMenu from 'components/completionMenu';
+import { IDEAL_WIDTH } from 'constants/numbers';
 
 import './Stage.scss';
 
@@ -73,7 +75,7 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
   const [lastBump, setLastBump] = useState();
   const [previousCorrectAnswer, setPreviousCorrectAnswer] = useState(null);
   const game = useSelector(state => state.game);
-  const { currentRoom, currentLevel } = game;
+  const { currentRoom, currentLevel, gameCompleted } = game;
 
   const dispatch = useDispatch();
 
@@ -94,8 +96,8 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
   const [position, setPosition] = useReducer((s, a) => ({ ...s, ...a }), {
     x: 0,
     y:
-      window.innerWidth < 313 * 1.5
-        ? (128 * window.innerWidth) / (313 * 1.5)
+      window.innerWidth < IDEAL_WIDTH
+        ? (128 * window.innerWidth) / IDEAL_WIDTH
         : 128
   });
 
@@ -106,7 +108,8 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
         menuState.isPauseMenuShown ||
         menuState.isSignMenuShown ||
         doorState.isConfirmingDoor ||
-        doorState.showDoorQuestion
+        doorState.showDoorQuestion ||
+        gameCompleted
       ) {
         return;
       }
@@ -247,8 +250,8 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
     window.addEventListener('keydown', keyDownHandler);
     window.addEventListener('keyup', keyUpHandler);
     // window.addEventListener('resize', resizeHandler);
-    if (window.innerWidth < 313 * 1.5) {
-      setScale(window.innerWidth / (313 * 1.5));
+    if (window.innerWidth < IDEAL_WIDTH) {
+      setScale(window.innerWidth / IDEAL_WIDTH);
     }
 
     const handlePositionChange = async (dir, change) => {
@@ -318,7 +321,8 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
     isSafari,
     lastBump,
     makeBumpSound,
-    makeSelectSound
+    makeSelectSound,
+    gameCompleted
   ]);
 
   const handleLeft = () => {
@@ -461,8 +465,8 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
     setPosition({
       x: 0,
       y:
-        window.innerWidth < 313 * 1.5
-          ? (128 * window.innerWidth) / (313 * 1.5)
+        window.innerWidth < IDEAL_WIDTH
+          ? (128 * window.innerWidth) / IDEAL_WIDTH
           : 128
     });
     setDoorState({
@@ -491,8 +495,8 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
     setPosition({
       x: 0,
       y:
-        window.innerWidth < 313 * 1.5
-          ? (128 * window.innerWidth) / (313 * 1.5)
+        window.innerWidth < IDEAL_WIDTH
+          ? (128 * window.innerWidth) / IDEAL_WIDTH
           : 128
     });
 
@@ -512,15 +516,24 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
 
   return (
     <>
+      {gameCompleted && !doorState.showDoorQuestion && (
+        <CompletionMenu
+          select={select}
+          menuToggle={menuToggle}
+          isSafari={isSafari}
+          backToMenu={backToMenu}
+        />
+      )}
       {isMobile &&
         !menuState.isMainMenuShown &&
         !menuState.isPauseMenuShown &&
         !menuState.isSignMenuShown &&
         !doorState.isConfirmingDoor &&
-        !doorState.showDoorQuestion && (
+        !doorState.showDoorQuestion &&
+        !gameCompleted && (
           <Buttons
             width={
-              window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5
+              window.innerWidth < IDEAL_WIDTH ? window.innerWidth : IDEAL_WIDTH
             }
             handleLeft={handleLeft}
             handleRight={handleRight}
@@ -532,7 +545,9 @@ const Stage = ({ isSafari = false, isMobile = false }) => {
         )}
       {!menuState.isMainMenuShown && (
         <ProgressBar
-          width={window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5}
+          width={
+            window.innerWidth < IDEAL_WIDTH ? window.innerWidth : IDEAL_WIDTH
+          }
         />
       )}
       {doorState.showDoorQuestion && (
