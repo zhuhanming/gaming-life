@@ -858,6 +858,39 @@ const questions = {
       'thought can exist without body',
       'body can exist without thought'
     ]
+  },
+  123: {
+    question: 'What do jokes require?',
+    correctAnswer: 'Stereotypes',
+    wrongAnswers: ['Humour', 'Speaking skills', 'Context']
+  },
+  124: {
+    question: 'Nothingless is',
+    correctAnswer: 'Prelanguage',
+    wrongAnswers: ['Negation of a thing', 'No thing', 'Lack of thingness']
+  },
+  125: {
+    question: 'NUS is staying relevant in the control society with its',
+    correctAnswer: 'Centre for Future-Ready Graduates',
+    wrongAnswers: [
+      'University Cultural Centre',
+      'Student Services Centre',
+      'University Health Centre'
+    ]
+  },
+  126: {
+    question: 'How did people overcome battering rams?',
+    correctAnswer: 'They realised horses like to charge into empty space',
+    wrongAnswers: [
+      'They realised horses could be easily shot down',
+      'They realised horses could be easily chased down and killed',
+      'They realised horses could be lured with food'
+    ]
+  },
+  127: {
+    question: 'Did Hanming enjoy this module?',
+    correctAnswer: 'Yes',
+    wrongAnswers: []
   }
 };
 

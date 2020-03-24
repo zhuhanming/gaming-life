@@ -241,7 +241,7 @@ const CompletionMenu = ({
             <Instruction>
               {numberOfQuestionsCorrect === NUMBER_OF_QUESTIONS
                 ? 'All questions correct! Guess I paid attention in class!'
-                : `${numberOfQuestionsCorrect} questions correct. Guess I didn't pay enough attention!`}
+                : `${numberOfQuestionsCorrect}/${NUMBER_OF_QUESTIONS} questions correct. Guess I didn't pay enough attention!`}
             </Instruction>
             {/* <Instruction>An email has been sent to me about this.</Instruction> */}
             <Instruction>
@@ -296,7 +296,7 @@ const CompletionMenu = ({
             <Instruction>
               {numberOfQuestionsCorrect === NUMBER_OF_QUESTIONS
                 ? 'All questions correct! Guess you paid attention in class!'
-                : `${numberOfQuestionsCorrect} questions correct. Guess you didn't pay enough attention!`}
+                : `${numberOfQuestionsCorrect}/${NUMBER_OF_QUESTIONS} questions correct. Guess you didn't pay enough attention!`}
             </Instruction>
             {/* <Instruction>An email has been sent to me about this.</Instruction> */}
             <Instruction>
