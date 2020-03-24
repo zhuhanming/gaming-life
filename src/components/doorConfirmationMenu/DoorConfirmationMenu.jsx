@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { useSfx } from 'contexts/sfxContext';
+import { IDEAL_WIDTH } from 'constants/numbers';
 
 import './DoorConfirmationMenu.scss';
 
@@ -47,8 +48,8 @@ const DoorConfirmationMenu = ({
   isSafari = false
 }) => {
   const { makeSelectSound, makeMenuSound } = useSfx();
-  const isScaled = window.innerWidth < 313 * 1.5;
-  const side = isScaled ? window.innerWidth : 313 * 1.5;
+  const isScaled = window.innerWidth < IDEAL_WIDTH;
+  const side = isScaled ? window.innerWidth : IDEAL_WIDTH;
   const [optionSelected, setOptionSelected] = useState(0);
 
   useEffect(() => {

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import { useSelector } from 'react-redux';
 
+import { NUMBER_OF_QUESTIONS } from 'constants/numbers';
+
 import './ProgressBar.scss';
 
 const ProgressBarContainer = styled.div`
@@ -18,7 +20,7 @@ const ProgressBarContainer = styled.div`
 
 const ProgressBarMinibar = styled.div`
   background-color: ${({ color }) => color};
-  width: calc((1 / 6) * 100% - 0.2rem);
+  width: calc((1 / ${NUMBER_OF_QUESTIONS}) * 100% - 0.2rem);
   height: 100%;
 `;
 
@@ -36,7 +38,7 @@ const ProgressBar = ({ width }) => {
           &nbsp;
         </ProgressBarMinibar>
       ))}
-      {_.times(6 - length, i => (
+      {_.times(NUMBER_OF_QUESTIONS - length, i => (
         <ProgressBarMinibar color="dimgrey" key={`placeholder-progress-${i}`}>
           &nbsp;
         </ProgressBarMinibar>

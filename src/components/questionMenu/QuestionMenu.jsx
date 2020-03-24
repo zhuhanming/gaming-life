@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { getQuestionAtId } from 'data/questions';
 import { useSfx } from 'contexts/sfxContext';
+import { IDEAL_WIDTH } from 'constants/numbers';
 
 import './QuestionMenu.scss';
 
@@ -57,8 +58,8 @@ const QuestionMenu = ({
     makeCorrectSound,
     makeWrongSound
   } = useSfx();
-  const isScaled = window.innerWidth < 313 * 1.5;
-  const side = isScaled ? window.innerWidth : 313 * 1.5;
+  const isScaled = window.innerWidth < IDEAL_WIDTH;
+  const side = isScaled ? window.innerWidth : IDEAL_WIDTH;
   const [optionSelected, setOptionSelected] = useState(0);
   const [isQuestionCorrect, setIsQuestionCorrect] = useState(null);
   let question;
@@ -214,9 +215,9 @@ const QuestionMenu = ({
 
   return (
     <Container height={side} width={side}>
-      <Menu className="question-menu">
+      <Menu className="question-menu" scaled={isScaled}>
         <Instructions>
-          <Instruction scaled={isScaled}>{question.question}</Instruction>
+          <Instruction>{question.question}</Instruction>
         </Instructions>
         {questionAnswers.map((answer, id) => (
           <button

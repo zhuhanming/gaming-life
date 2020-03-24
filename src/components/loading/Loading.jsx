@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { isMobile, isSafari } from 'react-device-detect';
 
+import { IDEAL_WIDTH } from 'constants/numbers';
+
 const LoadingContainer = styled.div`
   height: ${({ height }) => height}px;
   width: ${({ width }) => width}px;
@@ -36,7 +38,8 @@ const Warning = styled.p`
 `;
 
 const Loading = ({ isLoading, showLoading = true }) => {
-  const side = window.innerWidth < 313 * 1.5 ? window.innerWidth : 313 * 1.5;
+  const side =
+    window.innerWidth < IDEAL_WIDTH ? window.innerWidth : IDEAL_WIDTH;
   if (!isLoading) {
     return (
       <LoadingContainer

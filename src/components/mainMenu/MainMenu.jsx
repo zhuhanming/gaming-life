@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { resetGameState } from 'reducers/gameDux';
 import { useSfx } from 'contexts/sfxContext';
+import { IDEAL_WIDTH } from 'constants/numbers';
 
 import './MainMenu.scss';
 
@@ -57,8 +58,8 @@ const MainMenu = ({
 }) => {
   const { makeSelectSound, makeMenuSound } = useSfx();
   const dispatch = useDispatch();
-  const isScaled = window.innerWidth < 313 * 1.5;
-  const side = isScaled ? window.innerWidth : 313 * 1.5;
+  const isScaled = window.innerWidth < IDEAL_WIDTH;
+  const side = isScaled ? window.innerWidth : IDEAL_WIDTH;
   const [optionSelected, setOptionSelected] = useState(0);
 
   const gameState = useSelector(state => state.game.gameState);

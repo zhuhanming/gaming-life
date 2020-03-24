@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
+import { NUMBER_OF_QUESTIONS } from 'constants/numbers';
+
 const initialState = {
   gameState: {},
   currentLevel: 1,
@@ -30,10 +32,10 @@ const game = createSlice({
         state.currentRoom *= 2;
       }
       state.correctStreak.push(payload.isCorrect);
-      state.currentLevel += 1;
-      if (state.currentLevel === 7) {
+      if (state.currentLevel === NUMBER_OF_QUESTIONS) {
         state.gameCompleted = true;
       }
+      state.currentLevel += 1;
     },
     resetGameState: state => {
       state.gameState = initialState.gameState;
@@ -41,6 +43,7 @@ const game = createSlice({
       state.pastRooms = initialState.pastRooms;
       state.currentRoom = initialState.currentLevel;
       state.correctStreak = initialState.correctStreak;
+      state.gameCompleted = false;
     }
   }
 });
