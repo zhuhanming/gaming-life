@@ -179,7 +179,9 @@ const CompletionMenu = ({
     makeSelectSound,
     game,
     isJeremyFernando,
-    numberOfQuestionsCorrect
+    numberOfQuestionsCorrect,
+    backToMenu,
+    dispatch
   ]);
 
   return (
