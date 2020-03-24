@@ -117,6 +117,267 @@ const questions = {
       'Interpretation was a right reserved for the powerful',
       'How to interpret this question?'
     ]
+  },
+  18: {
+    question: 'What games are related to power plays?',
+    correctAnswer: 'Inclusion/Exclusion Games',
+    wrongAnswers: ['First-Person Shooter Games', 'Board Games', 'Video Games']
+  },
+  19: {
+    question:
+      'What is the sustainable architecture that inspired a Star Wars planet?',
+    correctAnswer: 'Arcosanti',
+    wrongAnswers: ['Ecologic Minutiae', 'Soleri Bridge', 'The Goldwater Bell']
+  },
+  20: {
+    question: 'Who is the architect whose designs inspired a Star Wars planet?',
+    correctAnswer: 'Paolo Soleri',
+    wrongAnswers: ['Justus Dahinden', 'Bruno Zevi', 'Dennis Sharp']
+  },
+  21: {
+    question: 'What is Siegfried Zielinski best known for?',
+    correctAnswer: 'Variantology',
+    wrongAnswers: ['Theology', 'Musicology', 'Philology']
+  },
+  22: {
+    question:
+      'What book by Julian Gough was recommended by Dr Jeremy Fernando?',
+    correctAnswer: 'Connect',
+    wrongAnswers: [
+      'Free Sex Chocolate',
+      'Minecraft End Game Poem',
+      'Jude in London'
+    ]
+  },
+  23: {
+    question: 'Who is widely credited for pioneering cyberpunk?',
+    correctAnswer: 'William Gibson',
+    wrongAnswers: ['Bruce Sterling', 'Rudy Rucker', 'Katsuhiro Otomo']
+  },
+  24: {
+    question: 'What is the meaning of barbarian',
+    correctAnswer: 'One who does not speak',
+    wrongAnswers: [
+      'One who does not listen',
+      'One who does not run',
+      'One who does not respect'
+    ]
+  },
+  25: {
+    question: 'Sociology came about because of...',
+    correctAnswer: 'Urbanisation',
+    wrongAnswers: ['Colonisation', 'Anthropology', 'Art History']
+  },
+  26: {
+    question: 'What is so scary about implicit constraints?',
+    correctAnswer: "You don't feel them",
+    wrongAnswers: [
+      "You don't get affected by them",
+      "You don't know them",
+      "You don't hear about them"
+    ]
+  },
+  27: {
+    question: 'How do sports make you feel the rules?',
+    correctAnswer: 'With constant disruptions',
+    wrongAnswers: ['With the rulebook', 'With replays', 'With the players']
+  },
+  28: {
+    question: 'If something can be analysed, it can be...',
+    correctAnswer: 'broken down into parts',
+    wrongAnswers: [
+      'seen and observed',
+      'tested and experimented with',
+      'measured as some quantity'
+    ]
+  },
+  29: {
+    question: 'Brian Upton clearly mentions that games are...',
+    correctAnswer: 'Artificial',
+    wrongAnswers: ['Fun', 'Natural', 'Recognisable']
+  },
+  30: {
+    question: 'What is so special about marriage?',
+    correctAnswer: 'Automatic Inheritance',
+    wrongAnswers: [
+      'Manual Inheritance',
+      'Automatic Polymorphism',
+      'Automatic Contract'
+    ]
+  },
+  31: {
+    question: 'Why is Carnival or Mardi Gras interesting?',
+    correctAnswer: 'Momentary suspension of roles',
+    wrongAnswers: [
+      'You get to wear a mask',
+      'Free food and drinks',
+      'Party with the king'
+    ]
+  },
+  32: {
+    question: 'Why does Carnival or Mardi Gras work?',
+    correctAnswer: 'Unspoken social rules',
+    wrongAnswers: [
+      'Nobody knows who you are',
+      'The masks work pretty well',
+      'Nobody remembers anything after the party'
+    ]
+  },
+  33: {
+    question:
+      'What is the name of a private all-male dining club for Oxford students?',
+    correctAnswer: 'Bullingdon Club',
+    wrongAnswers: [
+      'Marylebone Cricket Club',
+      'The Riot Club',
+      'Conservative Party'
+    ]
+  },
+  34: {
+    question: 'Why is social interaction like a game?',
+    correctAnswer: 'Social rules act much like constraints',
+    wrongAnswers: [
+      'You can game social interaction',
+      'Both are fun',
+      'You get feedback'
+    ]
+  },
+  35: {
+    question: 'What does THE History of Games suggest?',
+    correctAnswer: 'There is a single origin',
+    wrongAnswers: [
+      'There are many histories of games',
+      'The essay is a historical text',
+      'EB Taylor likes history'
+    ]
+  },
+  36: {
+    question: "What is the origin of the word 'origin'?",
+    correctAnswer: 'Arkhe; Authority',
+    wrongAnswers: ['Asulon; Sanctuary', 'Aster; Star', 'Axios; Worthy']
+  },
+  37: {
+    question: "What does 'power' in French also mean?",
+    correctAnswer: 'Possibilities',
+    wrongAnswers: ['Permissions', 'Perhaps', 'Principles']
+  },
+  38: {
+    question: 'Where was The World of Wrestling originally published?',
+    correctAnswer: 'French Popular Magazines',
+    wrongAnswers: ['Mythologies', 'Myth Today', 'American Popular Magazines']
+  },
+  39: {
+    question: 'What is the movie in this list that was mentioned in class?',
+    correctAnswer: 'Little Women',
+    wrongAnswers: ['Large Women', 'Little Men', 'Large Men']
+  },
+  40: {
+    question: "What is England's original language?",
+    correctAnswer: 'Celtic',
+    wrongAnswers: ['English', 'Latin', 'Irish']
+  },
+  41: {
+    question: 'Where did Roald Dahl make his break?',
+    correctAnswer: 'Playboy',
+    wrongAnswers: ['Someone Like You', 'The Landlady', 'Skin']
+  },
+  42: {
+    question: 'What is interesting about Playboy?',
+    correctAnswer: 'Literature in Playboy were of high quality',
+    wrongAnswers: [
+      'The images in Playboy were photoshopped',
+      'Playboy featured nudity',
+      'The writing in Playboy was poor'
+    ]
+  },
+  43: {
+    question:
+      'How could pieces like The World of Wrestling enter popular magazines?',
+    correctAnswer: 'Philosophy is for the common people in France',
+    wrongAnswers: [
+      'The publishers liked the work',
+      'It was a fluke',
+      'Barthes was invited to write it'
+    ]
+  },
+  44: {
+    question: 'Roland Barthes was NOT intrigued by...',
+    correctAnswer: 'The history of games',
+    wrongAnswers: [
+      'Confusion between nature and history',
+      'Ideological nature of cultural practices',
+      'How some practices are made to seem normal'
+    ]
+  },
+  45: {
+    question: "The 'logy' in 'ideology' also stands for",
+    correctAnswer: 'Word',
+    wrongAnswers: ['Sentence', 'God', 'Idea']
+  },
+  46: {
+    question: 'Staging works due to the',
+    correctAnswer: 'Suspension of disbelief',
+    wrongAnswers: [
+      'Excellent staging of wrestling',
+      'Presence of staging being obvious',
+      'Active participation of audience members'
+    ]
+  },
+  47: {
+    question: "Why is it slightly inaccurate to say 'ideologies'?",
+    correctAnswer: 'An idea is the one and only truth',
+    wrongAnswers: [
+      'That is a spelling mistake',
+      'There is no inaccuracy',
+      'Only a single ideology exists in this world'
+    ]
+  },
+  48: {
+    question: 'What does a spectacle require?',
+    correctAnswer: 'Spectators',
+    wrongAnswers: ['Eyes', 'Lenses', 'Bodies']
+  },
+  49: {
+    question:
+      'How can a sign be expressed in terms of signifier and signified?',
+    correctAnswer: 'Sign = Signifier / Signified',
+    wrongAnswers: [
+      'Sign = Signifier + Signified',
+      'Sign = Signifier - Signified',
+      'Sign = Signifier * Signified'
+    ]
+  },
+  50: {
+    question: "The word 'stereotype' originated from",
+    correctAnswer: 'Printing presses',
+    wrongAnswers: [
+      'The band Stereopony',
+      'Categorisation of stereos',
+      'Psychology'
+    ]
+  },
+  51: {
+    question: 'What does a spectacle require?',
+    correctAnswer: 'Staging',
+    wrongAnswers: ['Eyes', 'Lenses', 'Bodies']
+  },
+  52: {
+    question: "The word 'cliche' originated from",
+    correctAnswer: 'The sound printing presses made',
+    wrongAnswers: [
+      "The word 'click'",
+      "The word 'clutch'",
+      'The sound birds made'
+    ]
+  },
+  53: {
+    question: 'What does Barthes associate Christian virtue with?',
+    correctAnswer: 'Excess and grandiloquence',
+    wrongAnswers: [
+      'Frugality and simplicity',
+      'Wrestling and violence',
+      'High-class art'
+    ]
   }
 };
 
